@@ -1,0 +1,13 @@
+.head .header {
+  height: 7rem;
+  top: 0;
+  position: absolute;
+  background: rgb(32, 58, 145);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.contenidoPrincipal {
+  height: calc(100% -7rem);
+}

@@ -1,0 +1,88 @@
+<h4 align="center" style="background-color:white;">Publicar Vehiculo</h4>
+<div class="row" style="height: 50vh;">
+  <div class="col-12 col-md-6">
+    <div class="cuadro-inicio" style="height:100%;">
+      <b class="titulos">Selecionar Marca:</b>
+
+      <select class="form-control redondo mb-3" id="lista-marca" onChange="getModelo(this.value);">
+        <option value="">SELECCIONAR MARCA</option>
+      </select>
+
+      <b class="titulos">Selecionar Modelo:</b>
+
+      <select class="form-control redondo mb-3" id="lista-modelo">
+        <option value="">SELECCIONAR MODELO</option>
+      </select>
+
+      <b class="titulos">Selecionar Año:</b>
+
+      <select class="form-control redondo mb-3" id="años">
+        <option value="">vacio</option>
+        <option value="">vacio</option>
+        <option value="">vacio</option>
+        <option value="">vacio</option>
+      </select>
+
+      <b class="titulos">Transmision:</b>
+
+      <select class="form-control redondo mb-3" id="transmisiones">
+        <option value="">Seleccionar</option>
+        <option value="">Automatica</option>
+        <option value="">Mecanica</option>
+      </select>
+
+      <b class="titulos">Cilindraje:</b>
+
+      <select class="form-control redondo mb-3" id="cilindrajes">
+        <option value="">Seleccionar</option>
+        <option value="">V3</option>
+        <option value="">V4</option>
+        <option value="">V6</option>
+        <option value="">V8</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6 ">
+    <div class="cuadro-inicio" style="height:100%;">
+      <b class="titulos">Color:</b>
+
+      <select class="form-control redondo mb-3" id="colores">
+        <option value="">vacio</option>
+        <option value="">vacio</option>
+        <option value="">vacio</option>
+        <option value="">vacio</option>
+      </select>
+
+      <b class="titulos">Interior:</b>
+
+      <select class="form-control redondo mb-3" id="interiores">
+        <option value="">Seleccionar</option>
+        <option value="">Leather</option>
+        <option value="">Vinyl</option>
+        <option value="">Pana</option>
+      </select>
+
+      <b class="titulos">Seleccionar Estado:</b>
+
+      <select class="form-control redondo mb-3" id="estados">
+        <option value="">Seleccionar</option>
+        <option value="">Nuevo</option>
+        <option value="">Usado</option>
+      </select>
+
+      <div class="d-flex justify-content-center">
+        <input type="text" id="precio" style="width:140px;" class="form-control mb-4 " placeholder="Costo/Precio" required autofocus />
+      </div>
+      <h6 class="titulos" id="letraseccion">Seleccionar imagenes:</h6>
+
+      <div class="d-flex justify-content-center">
+        <input type="file" style="width:9rem;" name="archivosubido" />
+      </div>
+
+      <div class="d-flex justify-content-center mt-5">
+        <button style="width:140px;" class="btn btn-lg btn-primary mb-4 redondo mb-3 publicar " type="submit">Publicar</button>
+      </div>
+    </div>
+  </div>
+</div>
