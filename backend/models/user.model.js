@@ -1,61 +1,140 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const sql = require("../config/connection");
 
-var userSchema = new mongoose.Schema(
-  {
-    nombre: { type: String, required: true, trim: true },
-    apellido: { type: String, required: true, trim: true },
-    identificacion: { type: Object, required: false, trim: true },
-    usuario: { type: String, required: true, trim: true, unique: true },
-    telefono: { type: String, required: true, trim: true },
-    email: { type: String, required: true, trim: true },
-    fechaN: { type: Date, required: true, trim: true },
-    redes_sociales: { type: Object, required: false, trim: true },
-    nacionalidad: { type: String, required: false, trim: true },
-    password: { type: String, required: true, trim: true },
-    estado: { type: Boolean, required: true, trim: true },
-    tipo_usuario: { type: String, required: true, trim: true },
-    fotoPerfil: { type: String, trim: true },
-    saltSecret: String
-  },
-  { timestamps: true }
-);
-
-// Events
-userSchema.pre("save", function(next) {
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(this.password, salt, (err, hash) => {
-      this.password = hash;
-      this.saltSecret = salt;
-      next();
-    });
-  });
-});
-
-userSchema.pre("findByIdAndUpdate", function(next) {
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(this.password, salt, (err, hash) => {
-      this.password = hash;
-      this.saltSecret = salt;
-      next();
-    });
-  });
-});
-
-// Methods
-userSchema.methods.verifyPassword = function(password) {
-  return bcrypt.compareSync(password, this.password);
+// constructor
+const Usuario = function(usuario) {
+    this.correo_user = usuario.correo_user;
+    this.nom_user = usuario.nom_user;
+    this.telef_user = usuario.telef_user;
+    this.resid_user = usuario.resid_user;
+    this.passw_user = usuario.passw_user;
 };
 
-userSchema.methods.generateJwt = function() {
-  return jwt.sign(
-    { _id: this._id, tipo_usuario: this.tipo_usuario },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: process.env.JWT_EXP
-    }
-  );
+Usuario.create = (nuevo_usuario, result) => {
+    sql.query("INSERT INTO usuarios SET ?", nuevo_usuario, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+
+        console.log("created customer: ", { id: res.insertId, ...nuevo_usuario });
+        result(null, { id: res.insertId, ...nuevo_usuario });
+    });
 };
 
-mongoose.model("usuarios", userSchema);
+Usuario.login = (user, result) => {
+    sql.query(`select * from usuarios where correo_user = '${user.correo_user}' AND passw_user = '${user.passw_user}' limit 1`, (err, res) => {
+        console.log('err ', err);
+        console.log('res ', res);
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("found customer: ", res[0]);
+            result(null, res[0]);
+            return;
+        }
+
+        // not found Usuario with the id
+        result({ kind: "not_found" }, null);
+    });
+};
+
+Usuario.isLogin = (user, result) => {
+    sql.query(`select * from usuarios where correo_user = '${user.correo_user}' AND passw_user = '${user.passw_user}' limit 1`, (err, res) => {
+        console.log('err ', err);
+        console.log('res ', res);
+        if (err) {
+            console.log("error: ", err);
+            result(err, false);
+            return;
+        }
+
+        if (res.length) {
+            result(null, true);
+            return;
+        }
+
+        // not found Usuario with the id
+        result(null, false);
+    });
+};
+
+Usuario.findById = (id, result) => {
+    sql.query(`SELECT * FROM usuarios WHERE id_user = ${id}`, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("found customer: ", res[0]);
+            result(null, res[0]);
+            return;
+        }
+
+        // not found Usuario with the id
+        result({ kind: "not_found" }, null);
+    });
+};
+
+Usuario.getAll = result => {
+    sql.query("SELECT * FROM usuarios", (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        console.log("usuarios: ", res);
+        result(null, res);
+    });
+};
+
+Usuario.updateById = (id, usuario, result) => {
+    sql.query(
+        "UPDATE usuarios  SET ? WHERE id_user = ?", [usuario, id],
+        (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                result(null, err);
+                return;
+            }
+
+            if (res.affectedRows == 0) {
+                // not found Usuario with the id
+                result({ kind: "not_found" }, null);
+                return;
+            }
+
+            console.log("updated usuario: ", { id: id, ...usuario });
+            result(null, { id: id, ...usuario });
+        }
+    );
+};
+
+Usuario.remove = (id, result) => {
+    sql.query("DELETE FROM usuarios WHERE id_user = ?", id, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        if (res.affectedRows == 0) {
+            // not found Usuario with the id
+            result({ kind: "not_found" }, null);
+            return;
+        }
+
+        console.log("deleted customer with id: ", id);
+        result(null, res);
+    });
+};
+
+
+module.exports = Usuario;

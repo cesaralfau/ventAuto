@@ -1,14 +1,18 @@
 <div class="row " style="height: 100vh;">
-  <div class="col-12 p-0 head" style="height: 7rem;">
-    <header class="header">
-      <img src="assets/images/logoweb1.png" />
-    </header>
-  </div>
+    <div class="col-12 p-0 head" style="height: 7rem;">
+        <div> </div>
+        <header class="header">
+            <img routerLink="/home" src="assets/images/logoweb1.png" />
+        </header>
+        <div *ngIf="isLogin">
+            {{cuenta.nom_user}} <i (click)="cerrarSesion()" class="fas fa-sign-out-alt"></i>
+        </div>
+    </div>
 
-  <!-- ============================================================================================================== -->
+    <!-- ============================================================================================================== -->
 
-  <!-- aqui esta todo lo que esta en el medio de la pag -->
-  <div class="col-12 contenidoPrincipal p-0">
-    <router-outlet></router-outlet>
-  </div>
+    <!-- aqui esta todo lo que esta en el medio de la pag -->
+    <div class="col-12 contenidoPrincipal p-0">
+        <router-outlet></router-outlet>
+    </div>
 </div>

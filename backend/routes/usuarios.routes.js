@@ -1,20 +1,25 @@
-const express = require("express");
-const router = express.Router();
+module.exports = app => {
+    const usuarios_ = require("../controllers/user.controller");
 
-const ctrlUser = require("../controllers/user.controller");
+    // login
+    app.post("/login", usuarios_.login);
 
-const jwtHelper = require("../config/jwtHelper");
+    // is logIn
+    app.post("/isLogin", usuarios_.isLogin);
 
-router.post("/register", ctrlUser.register); //registro
-router.post("/authenticate", ctrlUser.authenticate); //login
-router.get("/userProfile", jwtHelper.verifyJwtToken, ctrlUser.userProfile); //perfil
+    // Create a new Customer
+    app.post("/usuarios", usuarios_.create);
 
-router.get("/", ctrlUser.getUsers); //pide todos los usuarios
-router.get("/cant", ctrlUser.CountUsers); // Cuenta la cantidad de usuarios
-router.get("/:id", ctrlUser.getUser); // pide un solo usuario
+    // Retrieve all Customers
+    app.get("/usuarios", usuarios_.findAll);
 
-router.put("/edit/:id", ctrlUser.UpdateUser); //editar datos
-router.put("/editP/:id", ctrlUser.UpdatePass); //editar contrasena
-router.put("/eliminar/:id", ctrlUser.DeleteUser); //cambia estado usuario "eliminar"
+    // Retrieve a single Customer with customerId
+    app.get("/usuarios/:id", usuarios_.findOne);
 
-module.exports = router;
+    // Update a Customer with customerId
+    app.put("/usuarios/:id", usuarios_.update);
+
+    // Delete a Customer with customerId
+    app.delete("/usuarios/:id", usuarios_.delete);
+
+};

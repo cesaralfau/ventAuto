@@ -1,194 +1,147 @@
-const mongoose = require("mongoose");
-const passport = require("passport");
-const _ = require("lodash");
-const bcrypt = require("bcryptjs");
+const Usuario = require("../models/user.model");
 
-const User = mongoose.model("usuarios");
-
-const ControladorUsuario = {};
-
-ControladorUsuario.register = (req, res, next) => {
-  var user = new User();
-
-  (user.nombre = req.body.nombre),
-    (user.apellido = req.body.apellido),
-    (user.usuario = req.body.usuario),
-    (user.identificacion = req.body.identificacion),
-    (user.redes_sociales = req.body.redes_sociales),
-    (user.fotoPerfil = req.body.fotoPerfil),
-    (user.telefono = req.body.telefono),
-    (user.email = req.body.email),
-    (user.fechaN = req.body.fechaN),
-    (user.password = req.body.password),
-    (user.estado = true),
-    (user.tipo_usuario = "U"),
-    user.save((err, doc) => {
-      if (!err)
-        res.json({
-          titulo: "Operacion exitosa.",
-          contenido: "Usuario registrado."
+// Create and Save a new Usuario
+exports.create = (req, res) => {
+    // Validate request
+    if (!req.body) {
+        res.status(400).send({
+            message: "Peticion no puede estar vacia!."
         });
-      else {
-        if (err.code == 11000)
-          res.status(422).json({
-            titulo: "Operacion nula.",
-            contenido: "Usuario introducido ya existe."
-          });
-        else
-          res.json({
-            titulo: "Operacion nula.",
-            contenido: "Error del servidor."
-          });
-      }
+    }
+
+    // Create a Customer
+
+    const usuario = new Usuario({
+        correo_user: req.body.correo_user,
+        nom_user: req.body.nom_user,
+        telef_user: req.body.telef_user,
+        resid_user: req.body.resid_user,
+        passw_user: req.body.passw_user,
+    });
+
+    // Save Usuario in the database
+    Usuario.create(usuario, (err, data) => {
+        if (err)
+            res.status(500).send({
+                message: err.message || "Some error occurred while creating the Customer."
+            });
+        else res.send(data);
     });
 };
 
-ControladorUsuario.authenticate = (req, res, next) => {
-  // call for passport authentication
-  passport.authenticate("local", (err, user, info) => {
-    // error from passport middleware
-    if (err) return res.status(400).json(err);
-    // registered user
-    else if (user) return res.status(200).json({ token: user.generateJwt() });
-    // unknown user or wrong password
-    else return res.status(404).json(info);
-  })(req, res);
-};
-
-ControladorUsuario.userProfile = (req, res, next) => {
-  User.findOne({ _id: req._id }, (err, user) => {
-    if (!user)
-      return res
-        .status(404)
-        .json({ status: false, message: "Usuario no existe" });
-    else
-      return res
-        .status(200)
-        .json({ status: true, user: _.pick(user, ["tipo_usuario", "_id"]) });
-  });
-};
-
-ControladorUsuario.getUsers = async (req, res) => {
-  const usuarios = await User.find({ estado: true });
-  res.json(usuarios);
-};
-
-ControladorUsuario.getUser = async (req, res, err) => {
-  const usuario = await User.findById(req.params.id, (err, user) => {
-    if (err) return res.status(500).send("Error del Servidor!");
-    if (!user) {
-      res.status(409).json({ mensaje: "usuario no existe" }); //usuario no existe
+// Retrieve all Usuarios from the database.
+exports.login = (req, res) => {
+    if (!req.body) {
+        res.status(400).send({
+            message: "Peticion no puede estar vacia!."
+        });
     }
-  });
-  res.json(usuario);
-};
+    const sesion = {
+        correo_user: req.body.correo_user,
+        passw_user: req.body.passw_user,
+    };
 
-ControladorUsuario.CountUsers = async (req, res) => {
-  const usuarios = await User.find({ estado: true }).count();
-  res.json(usuarios);
-};
-
-ControladorUsuario.UpdatePass = async (req, res) => {
-  const usuario = {
-    password: req.body.password,
-    saltSecret: String
-  };
-  bcrypt.genSalt(10, async (err, salt) => {
-    bcrypt.hash(usuario.password, salt, async (err, hash) => {
-      usuario.password = hash;
-      usuario.saltSecret = salt;
-
-      await User.findByIdAndUpdate(
-        req.params.id,
-        { $set: usuario },
-        { new: true },
-        function(err, model) {
-          if (!err)
-            res.json({
-              titulo: "Operacion exitosa.",
-              contenido: "Contraseña actualizada."
+    Usuario.login(sesion, (err, data) => {
+        if (err)
+            res.status(500).send({
+                message: err.message || "Algo salio mal en el login"
             });
-          else {
-            res.json({
-              titulo: "Operacion nula.",
-              contenido: "Error del servidor intente luego."
-            });
-          }
-        }
-      );
+        else res.send(data);
     });
-  });
 };
 
-ControladorUsuario.UpdateUser = async (req, res) => {
-  const usuario = {
-    nombre: req.body.nombre,
-    apellido: req.body.apellido,
-    usuario: req.body.usuario,
-    fotoPerfil: req.body.fotoPerfil,
-    telefono: req.body.telefono,
-    nacionalidad: req.body.nacionalidad,
-    email: req.body.email,
-    fechaN: req.body.fechaN,
-    identificacion: req.body.identificacion,
-    redes_sociales: req.body.redes_sociales,
-    // contrasena: bcrypt.hashSync(req.body.contrasena),
-    tipo_usuario: req.body.tipo_usuario
-  };
-  await User.findByIdAndUpdate(
-    req.params.id,
-    { $set: usuario },
-    { new: true },
-    function(err, model) {
-      if (!err)
-        res.json({
-          titulo: "Operacion exitosa.",
-          contenido: "Usuario actualizado.",
-          item: model
+exports.isLogin = (req, res) => {
+    if (!req.body) {
+        res.status(400).send({
+            message: "Peticion no puede estar vacia!."
         });
-      else {
-        if (err.code == 11000)
-          res.status(422).json({
-            titulo: "Operacion nula.",
-            contenido: "Usuario introducido ya existe."
-          });
-        else
-          res.json({
-            titulo: "Operacion nula.",
-            contenido: "Error del servidor intente luego."
-          });
-      }
     }
-  );
+    const sesion = {
+        correo_user: req.body.correo_user,
+        passw_user: req.body.passw_user,
+    };
+
+    Usuario.isLogin(sesion, (err, data) => {
+        if (err)
+            res.status(500).send({
+                message: err.message || "Algo salio mal revisando la sesion."
+            });
+        else res.send(data);
+    });
 };
 
-ControladorUsuario.DeleteUser = async (req, res) => {
-  const usuario = {
-    estado: false
-  };
-  await User.findByIdAndUpdate(
-    req.params.id,
-    { $set: usuario },
-    { new: true },
-    function(err, model) {
-      if (!err)
-        res.json({
-          titulo: "Operacion exitosa.",
-          contenido: "Usuario eliminado."
+// Retrieve all Usuarios from the database.
+exports.findAll = (req, res) => {
+    Usuario.getAll((err, data) => {
+        if (err)
+            res.status(500).send({
+                message: err.message || "Algo salio mal buscando los usuarios."
+            });
+        else res.send(data);
+    });
+};
+
+// Find a single Usuario with a UsuarioId
+exports.findOne = (req, res) => {
+    Usuario.findById(req.params.id, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `Not found Customer with id ${req.params.id}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "Error retrieving Customer with id " + req.params.id
+                });
+            }
+        } else res.send(data);
+    });
+};
+
+// Update a Usuario identified by the UsuarioId in the request
+exports.update = (req, res) => {
+    // Validate Request
+    if (!req.body) {
+        res.status(400).send({
+            message: "Peticion no puede estar vacia!"
         });
-      else {
-        res.json({
-          titulo: "Operacion nula.",
-          contenido: "Error del servidor intente luego."
-        });
-      }
     }
-  );
+    const usuario = new Usuario({
+        correo_user: req.body.correo_user,
+        nom_user: req.body.nom_user,
+        telef_user: req.body.telef_user,
+        resid_user: req.body.resid_user,
+        passw_user: req.body.passw_user,
+    });
+
+    Usuario.updateById(req.params.id, usuario, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `Not found Customer with id ${req.params.id}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "Error updating Customer with id " + req.params.id
+                });
+            }
+        } else res.send(data);
+    });
 };
 
-// ControladorUsuario.DeleteUser = async (req, res) => {
-//     await User.findByIdAndRemove(req.params.id);
-//     res.json({status:'usuario eliminado'});
-// }
-
-module.exports = ControladorUsuario;
+// Delete a Usuario with the specified UsuarioId in the request
+exports.delete = (req, res) => {
+    Usuario.remove(req.params.id, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `No se encuentra usuario con id:  ${req.params.id}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "No se pudo borrar el usuario con el id: " + req.params.id
+                });
+            }
+        } else res.send({ message: `Usuario borrado correctamente!` });
+    });
+};

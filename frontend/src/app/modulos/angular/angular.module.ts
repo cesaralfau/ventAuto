@@ -7,7 +7,7 @@ import { MatCardModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FiltroParaNgforPipe } from 'src/app/pipe/filtro-para-ngfor.pipe';
+
 @NgModule({
   declarations: [],
   imports: [

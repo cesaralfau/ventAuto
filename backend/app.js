@@ -1,45 +1,25 @@
-require("./config/config");
-require("./config/db");
-require("./config/passportConfig");
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const passport = require("passport");
-const morgan = require("morgan");
-const path = require("path");
+const app = express();
 
-//rutas
-const rtsIndex = require("./routes/usuarios.routes");
-const rtsPhotos = require("./routes/photos.routes");
-
-
-var app = express();
-
-// middleware
-app.use(morgan("dev"));
+// parse requests of content-type: application/json
 app.use(bodyParser.json());
 app.use(cors({ origin: "http://localhost:5200" }));
-app.use(passport.initialize());
+// parse requests of content-type: application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/api/usuarios", rtsIndex);
-app.use("/api/photos", rtsPhotos);
-
-
-// error handler
-app.use((err, req, res, next) => {
-  if (err.name === "ValidationError") {
-    var valErrors = [];
-    Object.keys(err.errors).forEach(key =>
-      valErrors.push(err.errors[key].message)
-    );
-    res.status(422).send(valErrors);
-  } else {
-    console.log(err);
-  }
+// simple route
+app.get("/", (req, res) => {
+    res.json({ message: "ventautos web api." });
 });
 
-// start server
-app.listen(process.env.PORT, () =>
-  console.log(`Server started at port : ${process.env.PORT}`)
-);
+require("./routes/usuarios.routes")(app);
+require("./routes/catalogo.routes")(app);
+require("./routes/marcamodelo.routes")(app);
+//require("./routes/interes.routes")(app);
+
+// set port, listen for requests
+app.listen(3000, () => {
+    console.log("Server is running on klk port 3000.");
+});

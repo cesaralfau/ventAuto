@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UsuariosService } from '../services/usuarios.service';
-import { UsuariosI } from '../models/usuario.model';
 import { showModalHome } from '../services/GLOBAL';
 import { DBservice } from '../services/bdservice.service';
 

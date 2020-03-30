@@ -1,27 +1,35 @@
 <div class="d-flex justify-content-center text-center">
-  <div class="text-center">
-    <img class="mb-4" src="assets/images/nota.png" />
-    <i><h1 class="h3 mb-4 font-weght-normal">Registro De Usuario</h1></i>
-    <label for="nombre" class="sr-only">Nombre</label>
+    <div class="text-center">
+        <img class="my-4" src="assets/images/nota.png" />
+        <form [formGroup]="formRegistro">
+            <i>
+        <h1 class="h3 mb-4 font-weght-normal">Registro De Usuario</h1>
+      </i>
+            <label for="nombre" class="sr-only">Nombre</label>
 
-    <input type="name" name="nombre" style="width:300px;" class="form-control mb-3 redondo" placeholder="Nombre" required />
+            <input type="name" formControlName="nom_user" style="width:300px;" class="form-control mt-3 redondo" placeholder="Nombre" required autofocus/>
 
-    <label for="tel" class="sr-only">telefono</label>
+            <label for="tel" class="sr-only">telefono</label>
 
-    <input type="tel" name="telefono" style="width:300px;" class="form-control mb-3 redondo " placeholder="Telefono de Contacto" required />
+            <input type="tel" formControlName="telef_user" style="width:300px;" class="form-control mt-3 redondo " placeholder="Telefono de Contacto" required />
 
-    <label for="lresidencia" class="sr-only">lugarresidencia</label>
+            <label for="lresidencia" class="sr-only">lugarresidencia</label>
 
-    <input type="tel" name="lresidencia" style="width:300px;" class="form-control mb-3 redondo" placeholder="Lugar de Residencia" required />
+            <input type="tel" formControlName="resid_user" style="width:300px;" class="form-control mt-3 redondo" placeholder="Lugar de Residencia" required />
 
-    <label for="correo" class="sr-only">Correo Electronico</label>
+            <div>
+                <label for="correo" class="sr-only">Correo Electronico</label>
+                <input type="email" formControlName="correo_user" style="width:300px;" class="form-control mt-3 redondo" placeholder="Correo Electronico" required />
+                <span *ngIf="!formRegistro.controls['correo_user'].valid && (formRegistro.controls['correo_user'].touched ||formRegistro.controls['correo_user'].dirty )" class="text-danger">Escriba una direccion valida</span>
+            </div>
 
-    <input type="email" name="correo" style="width:300px;" class="form-control mb-3 redondo" placeholder="Correo Electronico" required autofocus />
+            <div>
+                <label for="contrasena" class="sr-only">Contraseña</label>
+                <input type="password" formControlName="passw_user" style="width:300px;" class="form-control mt-3 redondo" placeholder="Contraseña" required />
+                <span *ngIf="!formRegistro.controls['passw_user'].valid  && (formRegistro.controls['passw_user'].touched ||formRegistro.controls['passw_user'].dirty )" class="text-danger">Minimo cuatro caracteres.</span>
+            </div>
 
-    <label for="contrasena" class="sr-only">Contraseña</label>
-
-    <input type="password" name="contrasena" style="width:300px;" class="form-control mb-3 redondo" placeholder="Contraseña" required />
-
-    <button class="btn btn-lg btn-primary mb-4 redondo w-75">Registrarme</button>
-  </div>
+            <button [disabled]="!formRegistro.valid" (click)="crearUsuario()" class="btn btn-lg btn-primary mt-4 redondo w-75">Registrarme</button>
+        </form>
+    </div>
 </div>

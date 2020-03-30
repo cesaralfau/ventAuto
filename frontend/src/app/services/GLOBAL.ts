@@ -1,7 +1,6 @@
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import * as _ from 'lodash';
 
-import { UsuariosI } from '../models/usuario.model';
 import { DBservice } from './bdservice.service';
 
 // ===========================================================================
@@ -19,25 +18,7 @@ export const showLoadin = new BehaviorSubject<boolean>(false);
 // ===========================================================================
 export const showModalHome = new BehaviorSubject<boolean>(false);
 
-// ===========================================================================
-// PARA LOS DATOS DE SESIONAMIENTO
-// ===========================================================================
-export const profile = new BehaviorSubject<UsuariosI>({
-  _id: ' ',
-  nombre: ' ',
-  apellido: ' ',
-  nacionalidad: ' ',
-  fotoPerfil: ' ',
-  usuario: ' ',
-  telefono: ' ',
-  email: ' ',
-  fechaN: ' ',
-  password: ' ',
-  estado: true,
-  identificacion: { cedula: '', pasaporte: '' },
-  redes_sociales: { '': '' },
-  tipo_usuario: ' ',
-});
+
 
 export class GLOBAL {
   constructor(private dbServ: DBservice) {}

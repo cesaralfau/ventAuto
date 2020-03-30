@@ -49,48 +49,30 @@ export class DBservice {
     // localStorage.setIteADMm('token', token);
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
   }
+  
+  login(arg) {
+    return this.peticion('login', 'post', JSON.stringify(arg));
+    }
 
-  login(arg, params): Observable<any> {
-    return this.peticion('auth/sign_in', 'post', arg).pipe(
-      map(val => {
-        console.log(val);
-        if (params === 'logueo') {
-          const data = val;
-          if (data.role === 'A') {
-            this.router.navigateByUrl('/admin');
-          } else if (data.role === 'U') {
-            this.router.navigateByUrl('/usuario');
-          } else {
-            this.router.navigateByUrl('/');
-          }
-        } else {
-          showModalHome.next(false);
-
-          this.router.navigate(['detalleOferta', params]);
-          // this.router.navigate(['detalleOferta', window.location.pathname.split('/')[2], 'confirmar']);
-        }
-
-        if (val.data) {
-          this.saveAuthUser(val.data);
-          this.router.navigate(['/admin']);
-        }
-        return val;
-      }),
-    );
-  }
-
-  isLoggedIn() {
+  async isLoggedIn() {
     const userPayload = this.getUserInfo();
+    console.log(`userPayload `, userPayload);
+    let res = true;
+
     if (userPayload) {
-      let res = true;
-      const user = JSON.parse(userPayload);
-      const parsed = btoa(user.role);
-      if (!this.allowedRoles.includes(parsed)) {
-        res = false;
+      let user;
+      try {
+        user = JSON.parse(userPayload);
+        console.log(`user `, user );
+        res = await this.revisarSesionEnDB({"correo_user": user.correo_user? user.correo_user:'', "passw_user":user.passw_user?user.passw_user:''}).toPromise()
+      } catch (error) {
+        res =false
       }
+      console.log(`>>>>>`,res );
       return res;
     } else {
-      return false;
+      res = false
+      return res;
     }
   }
 
@@ -99,7 +81,21 @@ export class DBservice {
   // =====================================================================
 
   createUser(arg) {
-    return this.peticion('auth', 'post', JSON.stringify(arg));
+    return this.peticion('usuarios', 'post', JSON.stringify(arg));
+  }
+  revisarSesionEnDB(arg):any {
+    return this.peticion('isLogin', 'post', JSON.stringify(arg));
+  }
+  // =====================================================================
+  // CATALOGO
+  // =====================================================================
+
+  createCatalogo(arg) {
+    return this.peticion('catalogo', 'post', JSON.stringify(arg));
+  }
+
+  getCatalogoInfo(){
+    return this.peticion('catalogo', 'get');
   }
 
   // =====================================================================

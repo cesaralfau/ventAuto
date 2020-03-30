@@ -1,25 +1,25 @@
 <div class="d-flex justify-content-center text-center">
-  <div class="text-center">
-    <img src="assets/images/usuario.png" />
-    <i><h1 class="h3 mb-4 font-weght-normal" id="letrasesion">Iniciar Sesion</h1></i>
+    <div class="text-center">
+        <img src="assets/images/usuario.png" />
+        <i><h1 class="h3 mb-4 font-weght-normal" id="letrasesion">Iniciar Sesion</h1></i>
 
-    <label for="correo" class="sr-only">Correo Electronico</label>
-    <input type="email" name="correo" style="width:300px;" class="form-control mb-4 redondo mx-auto" placeholder="Correo Electronico" required autofocus />
+        <label for="correo" class="sr-only">Correo Electronico</label>
+        <input type="email" [(ngModel)]="correo" style="width:300px;" class="form-control mb-4 redondo mx-auto" placeholder="Correo Electronico" required autofocus />
 
-    <label for="contrasena" class="sr-only ">Contraseña</label>
-    <input type="password" name="contrasena" style="width:300px;" class="form-control redondo mx-auto" placeholder="Contraseña" required />
+        <label for="contrasena" class="sr-only ">Contraseña</label>
+        <input type="password" [(ngModel)]="password" style="width:300px;" class="form-control redondo mx-auto" placeholder="Contraseña" required />
 
-    <div class="checkbox mb-3">
-      <label>
+        <div class="checkbox mb-3">
+            <label>
         <input type="checkbox" value="recuerdame" />
         <i>"Recuerdame"</i>
       </label>
-      <div>
-        <div class="d-block">
-          <button style="width:240px;" class="btn btn-lg btn-primary mb-4 redondo" type="submit" routerLink="/cliente/publicaciones">Iniciar Sesion</button>
+            <div>
+                <div class="d-block">
+                    <button style="width:240px;" class="btn btn-lg btn-primary mb-4 redondo" type="submit" (click)="onlogin()">Iniciar Sesion</button>
+                </div>
+                <span>No tiene una cuenta? <span class="link" routerLink="/home/registro">Registrate aqui</span> </span>
+            </div>
         </div>
-        <span>No tiene una cuenta? <span class="link" routerLink="/home/registro">Registrate aqui</span> </span>
-      </div>
     </div>
-  </div>
 </div>
