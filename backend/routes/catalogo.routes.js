@@ -16,4 +16,7 @@ module.exports = app => {
     // Delete a Customer with customerId
     app.delete("/catalogo/:id", item.delete);
 
+    //Buscar Vehiculo
+    app.get("/catalogo/:id_marcamodelo/:desde/:hasta/:estado", item.searchAll)
+
 };

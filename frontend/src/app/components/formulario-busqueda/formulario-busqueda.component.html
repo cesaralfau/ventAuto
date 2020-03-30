@@ -19,7 +19,8 @@
 
                 <div class="btn-group">
                     <select style="width:300px;" class="form-control redondo" formControlName="modelo" id="modelos">
-                        <option value="-1" disabled>Seleccione el modelo</option>
+                        <option  *ngIf="formBuscar.controls['marca'].value !== '-1' " value="-1" disabled>Seleccione el modelo</option>
+                        <option *ngIf="formBuscar.controls['marca'].value === '-1' " value="-1" disabled>Seleccione primero una marca</option>
                         <option *ngFor="let item of modelosFiltrados" value="{{item.id_marcamodelo}}">{{item.modelo}}
                         </option>
 

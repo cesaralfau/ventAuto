@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
-import { showModalHome } from './GLOBAL';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -96,6 +96,16 @@ export class DBservice {
 
   getCatalogoInfo(){
     return this.peticion('catalogo', 'get');
+  }
+
+  getCatalogoBusqueda(arg){
+
+    const id_marcamodelo=arg.id_marcamodelo
+    const desde=arg.desde
+    const hasta=arg.hasta
+    const estado=arg.estado
+
+    return this.peticion(`catalogo/${id_marcamodelo}/${desde}/${hasta}/${estado}`,'get')
   }
 
   // =====================================================================

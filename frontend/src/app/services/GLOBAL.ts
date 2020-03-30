@@ -3,22 +3,6 @@ import * as _ from 'lodash';
 
 import { DBservice } from './bdservice.service';
 
-// ===========================================================================
-// PARA SABER SI ENTRAR AL DASHBOARD O QUEDAMER EN OFERTAS
-// ===========================================================================
-export const Logearse = new BehaviorSubject<string>('logueo');
-
-// ===========================================================================
-// PARA MOSTRAR EL LOADING
-// ===========================================================================
-export const showLoadin = new BehaviorSubject<boolean>(false);
-
-// ===========================================================================
-// PARA MOSTRAR MODAL DE INICIAR SESION
-// ===========================================================================
-export const showModalHome = new BehaviorSubject<boolean>(false);
-
-
 
 export class GLOBAL {
   constructor(private dbServ: DBservice) {}

@@ -62,6 +62,23 @@ exports.findOne = (req, res) => {
     });
 };
 
+exports.searchAll = (req, res) => {
+
+    Item.searchAll(req.params.id_marcamodelo, req.params.desde, req.params.hasta, req.params.estado, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `No se encontro item en el catalogo con id ${req.params.id}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "Error al encontrar item en el catalogo con id " + req.params.id
+                });
+            }
+        } else res.send(data);
+    });
+};
+
 // Update a Item identified by the UsuarioId in the request
 exports.update = (req, res) => {
     // Validate Request
