@@ -7,77 +7,87 @@
                 <b class="text-white text-italic d-block letraSelect">Selecionar Marca:</b>
 
                 <div class="btn-group">
-                    <select style="width:300px;" class="form-control redondo" formControlName="marca" id="marcas">
-          <option value="Toyota">Toyota</option>
-          <option value="Honda">Honda</option>
-        </select>
+                    <select (change)="selectMarca($event.target.value)" style="width:300px;" class="form-control redondo" formControlName="marca" id="marcas">
+                        <option value="-1" disabled>Seleccione la marca</option>
+                        <option *ngFor="let item of listaMarcaModeloFiltrado" value="{{item}}">{{item}}</option>
+                        <!-- <option value="Toyota">Toyota</option>
+                        <option value="Honda">Honda</option> -->
+                    </select>
                 </div>
 
                 <b class="text-white text-italic d-block letraSelect">Selecionar Modelo:</b>
 
                 <div class="btn-group">
                     <select style="width:300px;" class="form-control redondo" formControlName="modelo" id="modelos">
-          <option value="Accord">Accord</option>
-          <option value="Camry">Camry</option>
-        </select>
+                        <option value="-1" disabled>Seleccione el modelo</option>
+                        <option *ngFor="let item of modelosFiltrados" value="{{item.id_marcamodelo}}">{{item.modelo}}
+                        </option>
+
+                    </select>
                 </div>
 
-                <b class="text-white text-italic d-block letraSelect">Seleccionar Año:</b>
+                <b class="text-white text-italic d-block letraSelect">Seleccionar rango de Año:</b>
+                <div class="row">
+                    <div class="col-12 col-md-6 ">
+                        <div class="d-flex justify-content-end">
 
-                <div class="btn-group">
-                    <select style="width:300px;" class="form-control redondo" formControlName="anio_catal" id="años">
-                  <option value="1990">1990</option>
-                  <option value="1991">1991</option>
-                  <option value="1992">1992</option>
-                  <option value="1994">1994</option>
-                  <option value="1995">1995</option>
-                  <option value="1996">1996</option>
-                  <option value="1997">1997</option>
-                  <option value="1998">1998</option>
-                  <option value="1999">1999</option>
-                  <option value="2000">2000</option>
-                  <option value="2001">2001</option>
-                  <option value="2002">2002</option>
-                  <option value="2003">2003</option>
-                  <option value="2004">2004</option>
-                  <option value="2005">2005</option>
-                  <option value="2006">2006</option>
-                  <option value="2007">2007</option>
-                  <option value="2008">2008</option>
-                  <option value="2009">2009</option>
-                  <option value="2010">2010</option>
-                  <option value="2011">2011</option>
-                  <option value="2012">2012</option>
-                  <option value="2013">2013</option>
-                  <option value="2014">2014</option>
-                  <option value="2015">2015</option>
-                  <option value="2016">2016</option>
-                  <option value="2017">2017</option>
-                  <option value="2018">2018</option>
-                  <option value="2019">2019</option>
-                  <option value="2020">2020</option>
-        </select>
+                            <b class="text-white text-italic d-block letraSelect d-block mr-5">DESDE</b>
+
+                        </div>
+                        <div class="d-flex justify-content-end">
+
+                            <div class="btn-group">
+                                <select style="width:135px;" class="form-control redondo" formControlName="anio_desde" id="años">
+                                    <option value="-1" disabled>Seleccione el año</option>
+                                    <option *ngFor="let item of aniosVehiculo" value="{{item}}">{{item}}</option>
+
+                                </select>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="d-flex justify-content-lg-start">
+                            <b class="text-white text-italic d-block letraSelect ml-5">HASTA</b>
+
+                        </div>
+                        <div class=" d-flex justify-content-lg-start w-100">
+
+                            <div class="btn-group">
+                                <select style="width:135px;" class="form-control redondo" formControlName="anio_hasta" id="años">
+                                    <option value="-1" disabled>Seleccione el año</option>
+                                    <option *ngFor="let item of aniosVehiculo" value="{{item}}">{{item}}</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
                 <b class="text-white text-italic d-block letraSelect">Color (Opcional):</b>
 
                 <div class="btn-group">
                     <select style="width:300px;" class="form-control redondo" formControlName="color_catal" id="colores">
-          <option value="Blanco">Blanco</option>
-          <option value="Negro">Negro</option>
-          <option value="Rojo">Rojo</option>
-          <option value="Cualquiera">Cualquiera</option>
-        </select>
+                        <option value="-1" disabled>Seleccione el color</option>
+                        <option value="Blanco">Blanco</option>
+                        <option value="Negro">Negro</option>
+                        <option value="Rojo">Rojo</option>
+                        <option value="Cualquiera">Cualquiera</option>
+                    </select>
                 </div>
 
                 <b class="text-white text-italic d-block letraSelect">Selecionar Estado:</b>
 
                 <div class="btn-group">
                     <select style="width:300px;" class="form-control redondo" formControlName="estado_catal" id="estados">
-          <option value="Nuevo">Nuevo</option>
-          <option value="Usado">Usado</option>
-          <option value="Nuevo/Usado">Nuevo/Usado</option>
-        </select>
+                        <option value="-1" disabled>Seleccione el estado</option>
+                        <option value="Nuevo">Nuevo</option>
+                        <option value="Usado">Usado</option>
+                        <option value="Nuevo/Usado">Nuevo/Usado</option>
+                    </select>
                 </div>
                 <div class="mt-3">
                     <div>

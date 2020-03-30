@@ -4,7 +4,6 @@ const sql = require("../config/connection");
 const Item = function(item_) {
     this.marca = item_.marca;
     this.modelo = item_.modelo;
-
 };
 
 Item.create = (nuevo_body, result) => {

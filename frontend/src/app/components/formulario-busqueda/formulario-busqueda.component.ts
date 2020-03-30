@@ -11,21 +11,37 @@ import { Router } from '@angular/router';
 })
 export class FormularioBusquedaComponent implements OnInit {
   formBuscar
-  listaCatalogo
+  listaMarcaModelo
+  listaMarcaModeloFiltrado=[]
+  modelosFiltrados: any;
+  aniosVehiculo=[]
   constructor(private fb:FormBuilder, private dbServ:DBservice, private router:Router) { }
 
   ngOnInit() {
     this.formBuscar = this.fb.group({
-      marca: [''],
-      modelo: [''],
-      anio_catal: [''],
-      color_catal: [''],
-      estado_catal: ['']
+      marca: ['-1'],
+      modelo: ['-1'],
+      anio_hasta: ['-1'],
+      anio_desde: ['-1'],
+      color_catal: ['-1'],
+      estado_catal: ['-1']
     });
 
-    this.CatalogoInfo();
-
+    this.MarcaModeloInfo();
+    this.LlenarArregloAnios()
   }
+
+  LlenarArregloAnios(){
+    let anio = new Date().getFullYear()
+    for (let i = 0; i < 30; i++) {
+      this.aniosVehiculo.push(anio)
+      anio -=1
+    }
+    this.aniosVehiculo.sort((a, b) => {
+      return a > b ? 1 : -1;
+    });    
+  }
+
   async buscarVehiculo(){
     try {
       console.log(this.formBuscar.value);
@@ -34,12 +50,29 @@ export class FormularioBusquedaComponent implements OnInit {
     }
   }
 
-  async CatalogoInfo(){
+  selectMarca(value){
+    this.formBuscar.controls.modelo.setValue('-1')
+    console.log(this.formBuscar)
+    this.modelosFiltrados= this.listaMarcaModelo.filter(lista=> lista.marca===value)
+  }
+
+  async MarcaModeloInfo(){
     try {
-      this.listaCatalogo = await this.dbServ.getCatalogoInfo().toPromise()
-      console.log(this.listaCatalogo)
+      this.listaMarcaModelo = await this.dbServ.getMarcaModeloInfo().toPromise()
+
+      for (let i = 0; i < this.listaMarcaModelo.length; i++) {
+        const element = this.listaMarcaModelo[i];
+        if(!this.listaMarcaModeloFiltrado.includes(element.marca)){
+          this.listaMarcaModeloFiltrado.push(element.marca)
+        }
+      }
+
+      // this.listaMarcaModeloFiltrado
+
+      console.log(this.listaMarcaModelo)
+      console.log(this.listaMarcaModeloFiltrado)
     } catch (error) {
-      console.log('ERROR BUSCANDO LA INFO DEL CATALOGO');
+      console.error('ERROR BUSCANDO LA INFO MARCA MODELO');
     }
   }
   
