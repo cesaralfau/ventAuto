@@ -27,9 +27,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { ResultadosBusquedaComponent } from './components/resultados-busqueda/resultados-busqueda.component';
 import { MarcoClienteComponent } from './components/marco-cliente/marco-cliente.component';
 import { MisPublicacionesComponent } from './components/mis-publicaciones/mis-publicaciones.component';
+import { DetalleVehiculoComponent } from './components/detalle-vehiculo/detalle-vehiculo.component';
 
 @NgModule({
-  declarations: [AppComponent, routingComponents, HomePageComponent, FormularioBusquedaComponent, PublicarVehiculoComponent, MarcoInicialComponent, LoginComponent, RegisterComponent, ResultadosBusquedaComponent, MarcoClienteComponent, MisPublicacionesComponent],
+  declarations: [AppComponent, routingComponents, HomePageComponent, FormularioBusquedaComponent, PublicarVehiculoComponent, MarcoInicialComponent, LoginComponent, RegisterComponent, ResultadosBusquedaComponent, MarcoClienteComponent, MisPublicacionesComponent, DetalleVehiculoComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

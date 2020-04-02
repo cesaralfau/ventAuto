@@ -1,10 +1,10 @@
-<h4 align="center" style="background-color:white;">Buscar Vehiculo</h4>
+<h4 align="center" style="background-color:skyblue;">Buscar Vehiculo</h4>
 <div class="row">
     <div class="col-12 col-lg-6">
         <div class="cuadro-inicio text-center">
             <img src="assets/images/coche2.png" alt="logo" class="img-responsive mb-3" width="90px" />
             <form [formGroup]="formBuscar">
-                <b class="text-white text-italic d-block letraSelect">Selecionar Marca:</b>
+                <b class="text-black text-italic d-block letraSelect">Selecionar Marca:</b>
 
                 <div class="btn-group">
                     <select (change)="selectMarca($event.target.value)" style="width:300px;" class="form-control redondo" formControlName="marca" id="marcas">
@@ -15,7 +15,7 @@
                     </select>
                 </div>
 
-                <b class="text-white text-italic d-block letraSelect">Selecionar Modelo:</b>
+                <b class="text-black text-italic d-block letraSelect">Selecionar Modelo:</b>
 
                 <div class="btn-group">
                     <select style="width:300px;" class="form-control redondo" formControlName="modelo" id="modelos">
@@ -27,12 +27,12 @@
                     </select>
                 </div>
 
-                <b class="text-white text-italic d-block letraSelect">Seleccionar rango de Año:</b>
+                <b class="text-black text-italic d-block letraSelect">Seleccionar rango de Año:</b>
                 <div class="row">
                     <div class="col-12 col-md-6 ">
                         <div class="d-flex justify-content-end">
 
-                            <b class="text-white text-italic d-block letraSelect d-block mr-5">DESDE</b>
+                            <b class="text-black text-italic d-block letraSelect d-block mr-5">DESDE</b>
 
                         </div>
                         <div class="d-flex justify-content-end">
@@ -51,7 +51,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="d-flex justify-content-lg-start">
-                            <b class="text-white text-italic d-block letraSelect ml-5">HASTA</b>
+                            <b class="text-black text-italic d-block letraSelect ml-5">HASTA</b>
 
                         </div>
                         <div class=" d-flex justify-content-lg-start w-100">
@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <b class="text-white text-italic d-block letraSelect">Color (Opcional):</b>
+                <!-- <b class="text-black text-italic d-block letraSelect">Color (Opcional):</b>
 
                 <div class="btn-group">
                     <select style="width:300px;" class="form-control redondo" formControlName="color_catal" id="colores">
@@ -78,9 +78,9 @@
                         <option value="Rojo">Rojo</option>
                         <option value="Cualquiera">Cualquiera</option>
                     </select>
-                </div>
+                </div> -->
 
-                <b class="text-white text-italic d-block letraSelect">Selecionar Estado:</b>
+                <b class="text-black text-italic d-block letraSelect">Selecionar Estado:</b>
 
                 <div class="btn-group">
                     <select style="width:300px;" class="form-control redondo" formControlName="estado_catal" id="estados">

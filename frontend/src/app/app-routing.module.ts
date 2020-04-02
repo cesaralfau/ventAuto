@@ -14,6 +14,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { MarcoClienteComponent } from './components/marco-cliente/marco-cliente.component';
 import { ResultadosBusquedaComponent } from './components/resultados-busqueda/resultados-busqueda.component';
 import { MisPublicacionesComponent } from './components/mis-publicaciones/mis-publicaciones.component';
+import { DetalleVehiculoComponent } from './components/detalle-vehiculo/detalle-vehiculo.component';
 // import { reservaGuard } from './auth/reservar.guard';
 
 const routes: Routes = [
@@ -60,6 +61,11 @@ const routes: Routes = [
       {
         path: 'publicaciones',
         component: MisPublicacionesComponent,
+      },
+
+      {
+        path: 'detalleVehiculo/:id',
+        component: DetalleVehiculoComponent,
       },
     ],
     // canActivate: [AdminGuard],

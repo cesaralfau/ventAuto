@@ -98,6 +98,11 @@ export class DBservice {
     return this.peticion('catalogo', 'get');
   }
 
+  getCatalogoById(id){
+    
+    return this.peticion(`catalogo/${id}`,'get')
+  }
+
   getCatalogoBusqueda(arg){
 
     const id_marcamodelo=arg.id_marcamodelo

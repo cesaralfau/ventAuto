@@ -16,8 +16,7 @@ const Item = function(item_) {
     this.inter_catal = item_.inter_catal;
     this.precio_catal = item_.precio_catal;
     this.trans_catal = item_.trans_catal;
-    //this.marcamodelo = item_.marcamodelo;
-    //this.usuario = item_.usuario;
+
 
 };
 

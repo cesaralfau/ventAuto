@@ -17,7 +17,6 @@ exports.create = (req, res) => {
         nombre_no_registrado: req.body.nombre_no_registrado,
         correo_no_registrado: req.body.correo_no_registrado,
         telef_no_registrado: req.body.telef_no_registrado
-
     });
 
     // Save Item in the database

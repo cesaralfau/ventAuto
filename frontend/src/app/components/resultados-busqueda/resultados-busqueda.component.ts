@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BuscquedaVehiculoService } from 'src/app/services/buscqueda-vehiculo.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-resultados-busqueda',
@@ -9,8 +10,8 @@ import { BuscquedaVehiculoService } from 'src/app/services/buscqueda-vehiculo.se
 })
 export class ResultadosBusquedaComponent implements OnInit, OnDestroy {
   sub: Subscription
-  resultados_busqueda: any;
-  constructor(private BVserv: BuscquedaVehiculoService) { }
+  resultados_busqueda=[]
+  constructor(private BVserv: BuscquedaVehiculoService, private router:Router) { }
 
   ngOnInit() {
     this.sub = this.BVserv.BUSQUEDAVEHICULO.subscribe(res => {
@@ -26,4 +27,8 @@ export class ResultadosBusquedaComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe()
   }
 
+  navegarADetalle(vehiculo){
+
+    this.router.navigate([`/cliente/detalleVehiculo/${vehiculo.id_catal}`])
+  }
 }
