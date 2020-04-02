@@ -6,18 +6,19 @@
 
                 <b class="titulos">Selecionar Marca:</b>
 
-                <select class="form-control redondo mb-3" formControlName="marca" id="lista-marca">
-        <option value="">SELECCIONAR MARCA</option>
-        <option value="Honda">Honda</option>
-        <option value="Toyota">Toyota</option>
+                <select (change)="selectMarca($event.target.value)" class="form-control redondo mb-3" formControlName="marca" id="lista-marca">
+        <option value="-1" disabled>Seleccione la marca</option>
+        <option *ngFor="let item of listaMarcaModeloFiltrado" value="{{item}}">{{item}}</option>
       </select>
 
                 <b class="titulos">Selecionar Modelo:</b>
 
                 <select class="form-control redondo mb-3" formControlName="modelo" id="lista-modelo">
-        <option value="">SELECCIONAR MODELO</option>
-        <option value="Accord">Accord</option>
-        <option value="Camry">Camry</option>
+                    <option  *ngIf="formPublicar.controls['marca'].value !== '-1' " value="-1" disabled>Seleccione el modelo</option>
+                    <option *ngIf="formPublicar.controls['marca'].value === '-1' " value="-1" disabled>Seleccione primero una marca</option>
+                    <option *ngFor="let item of modelosFiltrados" value="{{item.id_marcamodelo}}">{{item.modelo}}
+                    </option>
+        
       </select>
 
                 <b class="titulos">Selecionar Año:</b>
@@ -60,7 +61,7 @@
                 <b class="titulos">Transmision:</b>
 
                 <select class="form-control redondo mb-3" formControlName="trans_catal" id="transmisiones">
-        <option value="">Seleccionar</option>
+        <option value="-1" disabled>Seleccionar</option>
         <option value="Automatica">Automatica</option>
         <option value="Mecanica">Mecanica</option>
       </select>
@@ -68,7 +69,7 @@
                 <b class="titulos">Cilindraje:</b>
 
                 <select class="form-control redondo mb-3" formControlName="cilind_catal" id="cilindrajes">
-        <option value="">Seleccionar</option>
+        <option value="-1" disabled>Seleccionar</option>
         <option value="V3">V3</option>
         <option value="V4">V4</option>
         <option value="V6">V6</option>
@@ -82,25 +83,26 @@
                 <b class="titulos">Color:</b>
 
                 <select class="form-control redondo mb-3" formControlName="color_catal" id="colores">
-        <option value="Rojo">Rojo</option>
-        <option value="Blanco">Blanco</option>
-        <option value="Negro">Negro</option>
-        <option value="Azul">Azul</option>
-      </select>
+                    <option value="-1" disabled>Seleccionar</option>
+                    <option value="Rojo">Rojo</option>
+                    <option value="Blanco">Blanco</option>
+                    <option value="Negro">Negro</option>
+                    <option value="Azul">Azul</option>
+                </select>
 
                 <b class="titulos">Interior:</b>
 
                 <select class="form-control redondo mb-3" formControlName="inter_catal" id="interiores">
-        <option value="">Seleccionar</option>
-        <option value="Leather">Leather</option>
-        <option value="Vinyl">Vinyl</option>
-        <option value="Pana">Pana</option>
-      </select>
+                    <option value="-1" disabled>Seleccionar</option>
+                    <option value="Leather">Leather</option>
+                    <option value="Vinyl">Vinyl</option>
+                    <option value="Pana">Pana</option>
+                </select>
 
                 <b class="titulos">Seleccionar Estado:</b>
 
                 <select class="form-control redondo mb-3" formControlName="estado_catal" id="estados">
-        <option value="">Seleccionar</option>
+        <option value="-1" disabled>Seleccionar</option>
         <option value="Nuevo">Nuevo</option>
         <option value="Usado">Usado</option>
       </select>

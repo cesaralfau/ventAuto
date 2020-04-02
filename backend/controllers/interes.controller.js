@@ -1,4 +1,4 @@
-const Item = require("../models/catalogo.model");
+const Item = require("../models/interes.model");
 
 // Create and Save a new Item
 exports.create = (req, res) => {
@@ -12,15 +12,11 @@ exports.create = (req, res) => {
     // Create a Customer
 
     const item_ = new Item({
-        anio_catal: req.body.anio_catal,
-        cilind_catal: req.body.cilind_catal,
-        color_catal: req.body.color_catal,
-        estado_catal: req.body.estado_catal,
-        id_marcamodelo: req.body.modelo,
+        id_catal: req.body.id_catal,
         id_user: req.body.id_user,
-        inter_catal: req.body.inter_catal,
-        precio_catal: req.body.precio_catal,
-        trans_catal: req.body.trans_catal,
+        nombre_no_registrado: req.body.nombre_no_registrado,
+        correo_no_registrado: req.body.correo_no_registrado,
+        telef_no_registrado: req.body.telef_no_registrado
 
     });
 
@@ -28,7 +24,7 @@ exports.create = (req, res) => {
     Item.create(item_, (err, data) => {
         if (err)
             res.status(500).send({
-                message: err.message || "Error al insertar en el catalogo."
+                message: err.message || "Error al insertar en interes."
             });
         else res.send(data);
     });
@@ -39,7 +35,7 @@ exports.findAll = async(req, res) => {
     await Item.getAll(async(err, data) => {
         if (err)
             res.status(500).send({
-                message: err.message || "Algo salio mal buscando los items del catalogo."
+                message: err.message || "Algo salio mal buscando los items del interes."
             });
         else res.send(data);
     });
@@ -51,11 +47,11 @@ exports.findOne = (req, res) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `No se encontro item en el catalogo con id ${req.params.id}.`
+                    message: `No se encontro item en el interes con id ${req.params.id}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Error al encontrar item en el catalogo con id " + req.params.id
+                    message: "Error al encontrar item en el interes con id " + req.params.id
                 });
             }
         } else res.send(data);
@@ -68,11 +64,11 @@ exports.searchAll = (req, res) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `No se encontro item en el catalogo con id ${req.params.id}.`
+                    message: `No se encontro item en el interes con id ${req.params.id}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Error al encontrar item en el catalogo con id " + req.params.id
+                    message: "Error al encontrar item en el interes con id " + req.params.id
                 });
             }
         } else res.send(data);
@@ -88,26 +84,22 @@ exports.update = (req, res) => {
         });
     }
     const item_ = new Item({
-        anio_catal: req.body.anio_catal,
-        cilind_catal: req.body.cilind_catal,
-        color_catal: req.body.color_catal,
-        estado_catal: req.body.estado_catal,
-        id_marcamodelo: req.body.id_marcamodelo,
+        id_catal: req.body.id_catal,
         id_user: req.body.id_user,
-        inter_catal: req.body.inter_catal,
-        precio_catal: req.body.precio_catal,
-        trans_catal: req.body.trans_catal,
+        nombre_no_registrado: req.body.nombre_no_registrado,
+        correo_no_registrado: req.body.correo_no_registrado,
+        telef_no_registrado: req.body.telef_no_registrado
     });
 
     Item.updateById(req.params.id, item_, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `No se encontro item en el catalogo con id ${req.params.id}.`
+                    message: `No se encontro item en el interes con id ${req.params.id}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Error al actualizar item en el catalogo con id " + req.params.id
+                    message: "Error al actualizar item en el interes con id " + req.params.id
                 });
             }
         } else res.send(data);
@@ -120,13 +112,13 @@ exports.delete = (req, res) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `No se encontro item del catalogo con id:  ${req.params.id}.`
+                    message: `No se encontro item del interes con id:  ${req.params.id}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "No se pudo borrar el item del catalogo con el id: " + req.params.id
+                    message: "No se pudo borrar el item del interes con el id: " + req.params.id
                 });
             }
-        } else res.send({ message: `Item borrado correctamente del catalogo!` });
+        } else res.send({ message: `Item borrado correctamente del interes!` });
     });
 };

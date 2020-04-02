@@ -20,69 +20,65 @@
                         <img src="assets/images/buscar3.png" />
                         <h3>Nueva Busqueda</h3>
                         <br />
-                        <b class=" text-italic">Selecionar Marca:</b>
+                        <form [formGroup]="formBuscar">
+                            <b class=" text-italic">Selecionar Marca:</b>
 
-                        <div class="btn-group">
-                            <select style="width:240px;" class="form-control redondo" id="marcas">
-                <option value="">Nissan</option>
-                <option value="">Toyota</option>
-                <option value="">lexus</option>
-                <option value="">Honda</option>
-              </select>
-                        </div>
-                        <br />
+                            <div class="btn-group">
+                                <select (change)="selectMarca($event.target.value)" formControlName="marca" style="width:240px;" class="form-control redondo" id="marcas">
+                                    <option value="-1" disabled>Seleccione la marca</option>
+                                    <option *ngFor="let item of listaMarcaModeloFiltrado" value="{{item}}">{{item}}</option>
+                                </select>
+                            </div>
+                            <br />
 
-                        <b class=" text-italic">Selecionar Modelo:</b>
+                            <b class=" text-italic">Selecionar Modelo:</b>
 
-                        <div class="btn-group">
-                            <select style="width:240px;" class="form-control redondo" id="modelos">
-                <option value="">GT-R</option>
-                <option value="">Supra</option>
-                <option value="">Nx</option>
-                <option value="">Accord</option>
-              </select>
-                        </div>
-                        <br />
+                            <div class="btn-group">
+                                <select style="width:240px;" formControlName="modelo" class="form-control redondo" id="modelos">
+                                    <option  *ngIf="formBuscar.controls['marca'].value !== '-1' " value="-1" disabled>Seleccione el modelo</option>
+                                    <option *ngIf="formBuscar.controls['marca'].value === '-1' " value="-1" disabled>Seleccione primero una marca</option>
+                                    <option *ngFor="let item of modelosFiltrados" value="{{item.id_marcamodelo}}">{{item.modelo}}
+                                </select>
+                            </div>
+                            <br />
 
-                        <b class=" text-italic">Seleccionar Año:</b>
+                            <b class=" text-italic">Seleccionar rango de Año:</b>
 
-                        <div class="btn-group">
-                            <select style="width:240px;" class="form-control redondo" id="años">
-                <option value="">1990-2000</option>
-                <option value="">2000-2005</option>
-                <option value="">2005-2010</option>
-                <option value="">2010-2020</option>
-              </select>
-                        </div>
-                        <br />
+                            <div class="btn-group">
+                                <select style="width:240px;" formControlName="anio_desde" class="form-control redondo" id="años">
+                                    <option value="-1" disabled>DESDE</option>
+                                    <option *ngFor="let item of aniosVehiculo" value="{{item}}">{{item}}</option>
 
-                        <b class=" text-italic">Color (Opcional):</b>
+                                </select>
+                            </div>
+                            <br />
 
-                        <div class="btn-group">
-                            <select style="width:240px;" class="form-control redondo" id="colores">
-                <option value="">Blanco</option>
-                <option value="">Negro</option>
-                <option value="">Rojo</option>
-                <option value="">Cualquiera</option>
-              </select>
-                        </div>
-                        <br />
+                            <b class=" text-italic"></b>
+                            <br>
+                            <div class="btn-group">
+                                <select style="width:240px;" formControlName="anio_hasta" class="form-control redondo" id="añosh">
+                                    <option value="-1" disabled>HASTA</option>
+                                    <option *ngFor="let item of aniosVehiculo" value="{{item}}">{{item}}</option>
+                                </select>
+                            </div>
+                            <br />
 
-                        <b class=" text-italic">Selecionar Estado:</b>
+                            <b class=" text-italic">Selecionar Estado:</b>
 
-                        <div class="btn-group">
-                            <select style="width:240px;" class="form-control redondo" id="estados">
-                <option value="">Nuevo</option>
-                <option value="">Usado</option>
-                <option value="">Nuevo/Usado</option>
-              </select>
-                        </div>
+                            <div class="btn-group">
+                                <select style="width:240px;" formControlName="estado_catal" class="form-control redondo" id="estados">
+                                    <option value="-1" disabled>Seleccione el estado</option>
+                                    <option value="Nuevo">Nuevo</option>
+                                    <option value="Usado">Usado</option>
+                                    <option value="Nuevo/Usado">Nuevo/Usado</option>
+                                </select>
+                            </div>
 
-                        <div class="mt-3">
-                            <button style="width:240px;" id="btncircular" class="btn btn-lg btn-primary  mb-4 redondo" type="button">Buscar</button>
-                            <button style="width:240px;" id="btncircular" class="btn btn-lg btn-danger  mb-4 redondo" type="button">Atras</button>
-                        </div>
-
+                            <div class="mt-3">
+                                <button style="width:240px;" id="btncircular" class="btn btn-lg btn-primary  mb-4 redondo" type="button" (click)="buscarVehiculo()">Buscar</button>
+                                <button style="width:240px;" id="btncircular" class="btn btn-lg btn-danger  mb-4 redondo" type="button">Atras</button>
+                            </div>
+                        </form>
                         <br />
 
                         <b class=" text-italic">VentAutos © 2020 Copyright</b>
