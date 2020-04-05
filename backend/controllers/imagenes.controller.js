@@ -1,5 +1,7 @@
 const Item = require("../models/imagenes.model");
+const path = require("path");
 
+var fs = require("fs");
 // Create and Save a new Item
 exports.create = (req, res) => {
     // Validate request
@@ -24,6 +26,18 @@ exports.create = (req, res) => {
             });
         else res.send(data);
     });
+};
+
+
+exports.getOnePhoto = async(req, res) => {
+    let file = req.params.fileName;
+    console.log('>>>>>>>>>>>>>>>>');
+
+    console.log('req.params', req.params);
+    console.log('>>>>>>>>>>>>>>>>');
+    console.log('file', file);
+
+    await res.sendFile(path.resolve("./uploads/" + file));
 };
 
 // Retrieve all Usuarios from the database.

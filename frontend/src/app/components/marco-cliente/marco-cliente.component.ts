@@ -35,7 +35,7 @@ export class MarcoClienteComponent implements OnInit {
       this.isLogin=await this.dbServ.isLoggedIn()
       this.cuenta= JSON.parse(this.dbServ.getUserInfo())
     } catch (error) {}
-    console.log('isLogin ', this.isLogin)
+    console.log('isLogin >>>', this.isLogin)
   }
 
 LlenarArregloAnios() {

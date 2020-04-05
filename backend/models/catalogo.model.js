@@ -37,16 +37,8 @@ Item.create = (nuevo_body, filesInfo, result) => {
     (async() => {
         try {
             const infoCatal = await query("INSERT INTO catalogo SET ?", nuevo_body);
-            console.log('>>>>>>>>>>>>>>>>>>>>>>');
-            console.log(infoCatal);
-
-            console.log('>>>>>>>>>>>>>>>>>>>>>>');
             for (let i = 0; i < filesInfo.length; i++) {
                 const element = filesInfo[i];
-                // console.log(`=================`);
-                // console.log(`element`, element.path.split("\\")[1]);
-                // console.log(`=================`);
-                // console.log('');
                 const obj = {
                     id_catal: infoCatal.insertId,
                     fileName: element.path.split("\\")[1]
@@ -70,8 +62,10 @@ Item.findById = (id, result) => {
             const row = await query(`SELECT * FROM catalogo WHERE id_catal = ${id}`);
             const marca_modelo = await query(`SELECT * FROM marcamodelo WHERE id_marcamodelo = ${row[0].id_marcamodelo}`);
             const usuario_ = await query(`SELECT * FROM usuarios WHERE id_user = ${row[0].id_user}`)
+            const imagenes_ = await query(`SELECT * FROM imagenes WHERE id_catal = ${id}`)
             row[0].marcamodelo = marca_modelo[0]
             row[0].usuario = usuario_[0]
+            row[0].imagenes = imagenes_
             result(null, row[0]);
         } finally {
             query.end();
@@ -88,8 +82,10 @@ Item.searchAll = (id_marcamodelo, desde, hasta, estado, result) => {
                 const element = rows[i];
                 const marca_modelo = await query(`SELECT * FROM marcamodelo WHERE id_marcamodelo = ${element.id_marcamodelo}`);
                 const usuario_ = await query(`SELECT * FROM usuarios WHERE id_user = ${element.id_user}`);
+                const imagenes_ = await query(`SELECT * FROM imagenes WHERE id_catal = ${element.id_catal}`)
                 element.marcamodelo = marca_modelo[0]
                 element.usuario = usuario_[0]
+                element.imagenes = imagenes_
                 catalogo.push(element)
             }
             result(null, catalogo);

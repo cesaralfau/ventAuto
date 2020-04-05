@@ -1,3 +1,10 @@
 .titulos_azules {
     color: #203a91
 }
+
+.imgSlide {
+    display: block;
+    width: 100%;
+    min-height: 22rem;
+    max-height: 22rem;
+}

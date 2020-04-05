@@ -7,7 +7,7 @@
     <ul class="list-unstyled">
         <div *ngFor="let vehiculo of resultados_busqueda">
             <li class="media">
-                <img src="assets/images/gtr.png" class="mr-3" alt="..." />
+                <img src="http://localhost:3000/imagenes/archivo/{{vehiculo?.imagenes[0].fileName}}" class="mr-3 img-fluid" style="max-height: 10rem;" alt="..." />
                 <div class="media-body">
                     <h5 class="mt-0 mb-1">{{vehiculo.marcamodelo.marca}}</h5>
                     <h5 class="mt-0 mb-1">{{vehiculo.marcamodelo.modelo}}</h5>

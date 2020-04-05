@@ -26,10 +26,10 @@ const ControladorPhotos = {};
 //     });
 // };
 
-// ControladorPhotos.getOnePhoto = async(req, res) => {
-//     let file = req.params.filename;
-//     await res.sendFile(path.resolve("./uploads/" + file));
-// };
+ControladorPhotos.getOnePhoto = async(req, res) => {
+    let file = req.params.filename;
+    await res.sendFile(path.resolve("./uploads/" + file));
+};
 
 // ControladorPhotos.getIdOnePhoto = async(req, res) => {
 //     const photos = await Photo.findOne({ url: req.params.url });
@@ -44,36 +44,6 @@ const ControladorPhotos = {};
 //     const photos = await Photo.find({ uso: "para admin" });
 //     res.json(photos);
 // };
-
-ControladorPhotos.CreatePhoto = async(req, res) => {
-    // var photo = new Photo();
-    console.log(`req.files`, req.files);
-    res.json({ titulo: "Pruebas", });
-    // (photo.nombre = req.params.nombre),
-    // (photo.url = req.files.uploads[0].path.split("/")[1]),
-    // (photo.uso = req.params.uso),
-    // await photo.save((err, doc) => {
-    //     if (!err) {
-    //         res.json({
-    //             photo: doc,
-    //             titulo: "Operacion exitosa.",
-    //             contenido: "Foto subida."
-    //         });
-    //     } else {
-    //         if (err.code == 11000) {
-    //             res.status(422).json({
-    //                 titulo: "Operacion nula.",
-    //                 contenido: "Nombre de la foto ya está siendo utilizado."
-    //             });
-    //         } else {
-    //             res.json({
-    //                 titulo: "Operacion nula.",
-    //                 contenido: "Error del servidor."
-    //             });
-    //         }
-    //     }
-    // });
-};
 
 // ControladorPhotos.UpdatePhoto = async(req, res) => {
 //     const photor = {

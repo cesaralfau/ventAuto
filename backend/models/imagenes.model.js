@@ -23,6 +23,8 @@ Item.create = (nuevo_body, result) => {
     });
 };
 
+
+
 Item.findById = (id, result) => {
     const query = util.promisify(sql.query).bind(sql);
     (async() => {
