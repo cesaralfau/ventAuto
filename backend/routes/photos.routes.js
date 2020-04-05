@@ -12,11 +12,11 @@ const multipartMiddleware = multipart({
 //router.get("/dataID/:url", photo.getIdOnePhoto); //busca el id de una foto
 //router.get("/data/:url", photo.getDataOnePhoto); //busca el data de una foto
 
-router.get("/", photo.getAllPhotos); // pide todas las fotos
-router.post("/subir/:nombre/:uso", multipartMiddleware, photo.CreatePhoto); // crea una photo
-router.put("/udt/:id/:nombre/:uso/", multipartMiddleware, photo.UpdatePhoto); // actualiza una photo
-router.put("/udtData/:id/:nombre/:uso/", photo.UpdateDataPhoto); // actualiza una photo
-router.delete("/borrar/:url", photo.DeletePhoto); // elimina una photo
-router.delete("/borrar/:url/:id", photo.DeletePhotoAndData); // elimina una photo
+// router.get("/", photo.getAllPhotos); // pide todas las fotos
+router.post("/subir", multipartMiddleware, photo.CreatePhoto); // crea una photo
+// router.put("/udt/:id/:nombre/:uso/", multipartMiddleware, photo.UpdatePhoto); // actualiza una photo
+// router.put("/udtData/:id/:nombre/:uso/", photo.UpdateDataPhoto); // actualiza una photo
+// router.delete("/borrar/:url", photo.DeletePhoto); // elimina una photo
+// router.delete("/borrar/:url/:id", photo.DeletePhotoAndData); // elimina una photo
 
 module.exports = router;

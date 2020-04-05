@@ -1,8 +1,12 @@
 module.exports = app => {
     const item = require("../controllers/catalogo.controller");
 
+    const multipart = require("connect-multiparty");
+    const multipartMiddleware = multipart({
+        uploadDir: "./uploads"
+    });
     // Create a new Customer
-    app.post("/catalogo", item.create);
+    app.post("/catalogo", multipartMiddleware, item.create);
 
     // Retrieve all Customers
     app.get("/catalogo", item.findAll);

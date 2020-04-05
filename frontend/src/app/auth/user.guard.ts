@@ -26,7 +26,7 @@ export class UserGuard implements CanActivate, CanActivateChild, CanLoad {
     } else {
       this.dbServ.deleteUserInfo();
 
-      showModalHome.next(false);
+      // showModalHome.next(false);
       this.router.navigateByUrl('/');
       // this.usuariosServices.deleteToken();
       return false;

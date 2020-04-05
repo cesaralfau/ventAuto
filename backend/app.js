@@ -2,8 +2,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
+const morgan = require("morgan")
+
 
 // parse requests of content-type: application/json
+app.use(morgan("dev"))
 app.use(bodyParser.json());
 app.use(cors({ origin: "http://localhost:5200" }));
 // parse requests of content-type: application/x-www-form-urlencoded
@@ -17,6 +20,7 @@ app.get("/", (req, res) => {
 require("./routes/usuarios.routes")(app);
 require("./routes/catalogo.routes")(app);
 require("./routes/marcamodelo.routes")(app);
+require("./routes/imagenes.routes")(app);
 //require("./routes/interes.routes")(app);
 
 // set port, listen for requests
