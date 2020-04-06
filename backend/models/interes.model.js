@@ -1,8 +1,8 @@
 const sql = require("../config/connection");
 const util = require('util');
 const _ = require('lodash');
-const Usuario = require("../models/user.model");
-const Catalogo = require("./models/catalogo.model")
+// const Usuario = require("../models/user.model");
+// const Catalogo = require("./models/catalogo.model")
 var nodemailer = require("nodemailer");
 
 
@@ -23,6 +23,19 @@ const Item = function(item_) {
 };
 
 Item.create = (nuevo_body, result) => {
+    console.log("");
+    console.log("");
+    console.log("");
+    console.log("---------------");
+    console.log("");
+    console.log(nuevo_body);
+    console.log("");
+    console.log("---------------");
+    console.log("");
+    console.log("");
+    console.log("");
+    console.log("");
+
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -40,16 +53,17 @@ Item.create = (nuevo_body, result) => {
 
     transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
-            console.log(error);
+            console.error(error);
+            result(error, null);
         } else {
             console.log('Email sent: ' + info.response);
+            result(null, { msg: "pruebas" });
         }
     });
 
     // sql.query("INSERT INTO interes SET ?", nuevo_body, (err, res) => {
     //     if (err) {
     //         console.log("error: ", err);
-    //         result(err, null);
     //         return;
     //     }
 

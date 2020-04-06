@@ -1,25 +1,25 @@
 <div class="container-fluid">
-  <i>
+    <i>
     <h2 class="mt-4">Bienvenido {{ perfil?.nom_user }}, Aqui estan tus publicaciones</h2>
   </i>
-  <hr width="80%" align="left" size="40" />
-
-  <div *ngFor="let vehiculo of mispublicaciones">
-    <li class="media">
-      <img src="http://localhost:3000/imagenes/archivo/{{ (vehiculo?.imagenes)[0].fileName }}" class="mr-3 img-fluid" style="max-height: 10rem;" alt="..." />
-      <div class="media-body">
-        <h5 class="mt-0 mb-1">{{ vehiculo.marcamodelo.marca }}</h5>
-        <h5 class="mt-0 mb-1">{{ vehiculo.marcamodelo.modelo }}</h5>
-        <h5 class="mt-0 mb-1">{{ vehiculo.anio_catal }}</h5>
-        <h5 class="mt-0 mb-1">{{ vehiculo.color_catal }}</h5>
-        <h5 class="mt-0 mb-1">{{ vehiculo.estado_catal }}</h5>
-        <br />
-        <button style="width: 140px;" class="btn btn-warning redondo">Editar</button>
-        <button style="width: 140px;" class="btn btn-danger redondo">Eliminar</button>
-      </div>
-    </li>
     <hr width="80%" align="left" size="40" />
-  </div>
 
-  <button id="btnpublicar" style="width: 340px;" class="btn btn-lg btn-primary mb-4 float-right redondo" type="button">Publicar Un Vehiculo</button>
+    <div *ngFor="let vehiculo of mispublicaciones">
+        <li class="media">
+            <img src="http://localhost:3000/imagenes/archivo/{{ (vehiculo?.imagenes)[0].fileName }}" class="mr-3 img-fluid" style="max-height: 10rem;" alt="..." />
+            <div class="media-body">
+                <h5 class="mt-0 mb-1">{{ vehiculo.marcamodelo.marca }}</h5>
+                <h5 class="mt-0 mb-1">{{ vehiculo.marcamodelo.modelo }}</h5>
+                <h5 class="mt-0 mb-1">{{ vehiculo.anio_catal }}</h5>
+                <h5 class="mt-0 mb-1">{{ vehiculo.color_catal }}</h5>
+                <h5 class="mt-0 mb-1">{{ vehiculo.estado_catal }}</h5>
+                <br />
+                <button style="width: 140px;" class="btn btn-warning redondo">Editar</button>
+                <button style="width: 140px;" class="btn btn-danger redondo">Eliminar</button>
+            </div>
+        </li>
+        <hr width="80%" align="left" size="40" />
+    </div>
+
+    <button id="btnpublicar" style="width: 340px;" class="btn btn-lg btn-primary mb-4 float-right redondo" type="button" [routerLink]="['/home/publicarVehiculo']" routerLinkActive="router-link-active">Publicar Un Vehiculo</button>
 </div>

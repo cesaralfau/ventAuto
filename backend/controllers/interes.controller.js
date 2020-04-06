@@ -3,11 +3,11 @@ const Item = require("../models/interes.model");
 // Create and Save a new Item
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body) {
-        res.status(400).send({
-            message: "Peticion no puede estar vacia!."
-        });
-    }
+    // if (!req.body) {
+    //     res.status(400).send({
+    //         message: "Peticion no puede estar vacia!."
+    //     });
+    // }
 
     // Create a Customer
 

@@ -1,31 +1,31 @@
 <div class="row" style="height: 100vh;">
-  <div class="col-12 p-0 head d-flex justify-content-center align-items-center" style="height: 7rem;">
-    <div *ngIf="isLogin" class="">
-      <div class="d-flex align-items-center dropCuenta">
-        <div class="btn-group" dropdown>
-          <a id="colorSky" dropdownToggle class="dropdown-toggle" aria-controls="dropdown-basic"> {{ cuenta.nom_user }} <span class="caret"></span> </a>
+    <div class="col-12 p-0 head d-flex justify-content-center align-items-center" style="height: 7rem;">
+        <div *ngIf="isLogin" class="">
+            <div class="d-flex align-items-center dropCuenta">
+                <div class="btn-group" dropdown>
+                    <a id="colorSky" dropdownToggle class="dropdown-toggle" aria-controls="dropdown-basic"> {{ cuenta.nom_user }} <span class="caret"></span> </a>
 
-          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-            <li role="menuitem" [routerLink]="['/cliente/publicaciones']">
-              <a class="dropdown-item" id="dropdown-item"><i class="fas fa-address-card"></i>Mis publicaciones</a>
-            </li>
-            <li class="divider dropdown-divider"></li>
-            <li role="menuitem">
-              <a class="dropdown-item" id="dropdown-item" (click)="logOut()"><i class="fas fa-power-off"></i>Cerrar sesión</a>
-            </li>
-          </ul>
+                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                        <li role="menuitem" [routerLink]="['/cliente/publicaciones']">
+                            <a class="dropdown-item" id="dropdown-item"><i class="fas fa-car-side"></i>Mis publicaciones</a>
+                        </li>
+                        <li class="divider dropdown-divider"></li>
+                        <li role="menuitem">
+                            <a class="dropdown-item" id="dropdown-item" (click)="logOut()"><i class="fas fa-power-off"></i>Cerrar sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
+        <div>
+            <img routerLink="/home" src="assets/images/logoweb1.png" />
+        </div>
     </div>
-    <div>
-      <img routerLink="/home" src="assets/images/logoweb1.png" />
+
+    <!-- ============================================================================================================== -->
+
+    <!-- aqui esta todo lo que esta en el medio de la pag -->
+    <div class="col-12 contenidoPrincipal p-0">
+        <router-outlet></router-outlet>
     </div>
-  </div>
-
-  <!-- ============================================================================================================== -->
-
-  <!-- aqui esta todo lo que esta en el medio de la pag -->
-  <div class="col-12 contenidoPrincipal p-0">
-    <router-outlet></router-outlet>
-  </div>
 </div>
