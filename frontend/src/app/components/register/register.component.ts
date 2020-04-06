@@ -31,7 +31,6 @@ export class RegisterComponent implements OnInit {
     this.dbServ.toastSuccess( res.nom_user+", te has registrado correctamente!","CORRECTO")
     this.dbServ.saveAuthUser(res);
     this.router.navigate(['/cliente/publicaciones']);
-    
     } catch (error) {
       
     }
