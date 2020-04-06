@@ -20,15 +20,14 @@ export class DBservice {
       return this.http[metodo](`${this.url}/${ruta}`, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + this.getAuthToken(),
           Accept: 'Application/json',
         },
       });
     } else {
+      console.log(`metodo>>>>>`, metodo);
       return this.http[metodo](`${this.url}/${ruta}`, json || '', {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + this.getAuthToken(),
           Accept: 'Application/json',
         },
       });
@@ -136,15 +135,15 @@ export class DBservice {
   getAllFotosForAdmin() {
     return this.peticion(`imagenes/get/all`, 'get');
   }
-
+  
   updatePhoto(what, arg) {
     return this.peticion(`imagenes/update/${what}/${arg.id}`, 'patch', JSON.stringify(arg));
   }
-
+  
   // =====================================================================
   // INTERES
   // =====================================================================
-
+  
   createInteres(arg) {
     return this.peticion('interes', 'post', JSON.stringify(arg));
   }

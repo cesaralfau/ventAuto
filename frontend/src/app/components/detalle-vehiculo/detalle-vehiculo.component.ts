@@ -44,13 +44,14 @@ export class DetalleVehiculoComponent implements OnInit {
     console.log(this.formInteres.value);
     const obj = {
       id_catal: this.vehiculoSeleccionado.id_catal,
-      id_user: this.vehiculoSeleccionado ? this.vehiculoSeleccionado.usuario.id_user : null,
+      id_user: this.cuenta ? this.cuenta.id_user : null,
       nombre_no_registrado: this.formInteres.value.nombreinteres,
       correo_no_registrado: this.formInteres.value.correointeres,
       telef_no_registrado: this.formInteres.value.telefonointeres,
     };
     try {
       const res = await this.dbServ.createInteres(obj).toPromise();
+      this.dbServ.toastSuccess('El mensaje al vendedor ha sido enviado correctamente','AVISO')
       document.getElementById('btnCerrar').click();
       console.log(`res`, res);
     } catch (error) {}

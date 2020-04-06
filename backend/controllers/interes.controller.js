@@ -19,6 +19,8 @@ exports.create = (req, res) => {
         telef_no_registrado: req.body.telef_no_registrado
     });
 
+
+    console.log(`item_`, item_);
     // Save Item in the database
     Item.create(item_, (err, data) => {
         if (err)
@@ -30,8 +32,8 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Usuarios from the database.
-exports.findAll = async (req, res) => {
-    await Item.getAll(async (err, data) => {
+exports.findAll = async(req, res) => {
+    await Item.getAll(async(err, data) => {
         if (err)
             res.status(500).send({
                 message: err.message || "Algo salio mal buscando los items del interes."

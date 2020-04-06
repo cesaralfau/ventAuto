@@ -7,7 +7,7 @@ var nodemailer = require("nodemailer");
 
 
 // constructor
-const Item = function (item_) {
+const Item = function(item_) {
     this.id_catal = item_.id_catal;
     this.id_user = item_.id_user;
     this.nombre_no_registrado = item_.nombre_no_registrado;
@@ -17,7 +17,7 @@ const Item = function (item_) {
 
 Item.create = (nuevo_body, result) => {
     const query = util.promisify(sql.query).bind(sql);
-    (async () => {
+    (async() => {
         try {
             const info = await query("INSERT INTO interes SET ?", nuevo_body);
             let infoUsuario;
@@ -26,7 +26,10 @@ Item.create = (nuevo_body, result) => {
             }
             infoCatalogo = await query(`SELECT * FROM catalogo WHERE id_catal = ${nuevo_body.id_catal}`);
 
-            infoVendedor = await query(`SELECT * FROM usuarios WHERE id_user = ${infoCatalogo.id_user}`);
+            infoMarcaModelo = await query(`SELECT * FROM marcamodelo WHERE id_marcamodelo = ${infoCatalogo[0].id_marcamodelo}`);
+
+            infoVendedor = await query(`SELECT * FROM usuarios WHERE id_user = ${infoCatalogo[0].id_user}`);
+
 
             var transporter = nodemailer.createTransport({
                 service: 'gmail',
@@ -37,12 +40,12 @@ Item.create = (nuevo_body, result) => {
             });
             var mailOptions = {
                 from: 'elalfau@gmail.com',
-                to: infoVendedor.correo_user,
+                to: infoVendedor[0].correo_user,
                 subject: 'VENTAUTO: NOTIFICACION DE INTERES',
-                text: `El siguiente usuario le a dado interes a la siguiente publicación: ${infoCatalogo.marca}, ${infoCatalogo.modelo}, ${infoCatalogo.anio_catal} 
-                \n\n Nombre: ${nuevo_body.id_user ? infoUsuario.nom_user : nuevo_body.nombre_no_registrado}, Correo: ${nuevo_body.id_user ? infoUsuario.correo_user : nuevo_body.correo_no_registrado},Telefono: ${nuevo_body.id_user ? infoUsuario.telef_user : nuevo_body.telef_no_registrado}`
+                text: `El siguiente usuario le a dado interes a la siguiente publicación: ${infoMarcaModelo[0].marca}, ${infoMarcaModelo[0].modelo}, ${infoCatalogo[0].anio_catal} 
+                \n\n Nombre: ${nuevo_body.id_user ? infoUsuario[0].nom_user : nuevo_body.nombre_no_registrado}, Correo: ${nuevo_body.id_user ? infoUsuario[0].correo_user : nuevo_body.correo_no_registrado},Telefono: ${nuevo_body.id_user ? infoUsuario[0].telef_user : nuevo_body.telef_no_registrado}`
             };
-            await transporter.sendMail(mailOptions, function (error, info) {
+            await transporter.sendMail(mailOptions, function(error, info) {
                 if (error) {
                     console.error(error);
                     result(error, null);
@@ -56,7 +59,7 @@ Item.create = (nuevo_body, result) => {
         } catch (error) {
             console.error(error);
         }
-    })
+    })()
 }
 
 // Item.findById = (id, result) => {
