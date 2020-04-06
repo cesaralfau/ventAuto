@@ -4,24 +4,12 @@
     background-color: skyblue;
 }
 
-.flex-container .box {
-    background-color: rgb(32, 58, 145);
-    width: 50%;
-    border-radius: 2%;
-    margin: 3px;
-    text-align: center;
-    line-height: 55px;
-    font-size: 15px;
-}
-
 .titulos {
     font-style: italic;
     color: black;
     display: block;
     text-align: center;
 }
-
-.box {}
 
 .cuadro-inicio {
     border-radius: 25px;

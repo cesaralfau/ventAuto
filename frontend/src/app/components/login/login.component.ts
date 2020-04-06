@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
         passw_user:this.password,
         correo_user:this.correo,
       }
-
       const res = await this.dbServ.login(obj).toPromise()
       console.log(res);
       this.dbServ.toastSuccess('Bienvenido ' +res.nom_user,'CORRECTO')

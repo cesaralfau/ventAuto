@@ -57,16 +57,6 @@ export class PublicarVehiculoComponent implements OnInit {
       console.error();
 
     }
-    // try {
-    //   const res = await this.dbServ.createCatalogo(formData).toPromise()
-    //   console.log(`res`, res);
-    //   this.dbServ.toastSuccess("Vehiculo publicado exitosamente!", "CORRECTO")
-    //   this.router.navigate(['/cliente/publicaciones']);
-    // } catch (error) {
-    //   console.log('NO SE ENVIO NADA');
-    //   console.error();
-
-    // }
 
   }
 
