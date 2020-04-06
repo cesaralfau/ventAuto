@@ -21,17 +21,6 @@ const Item = function (item_) {
 };
 
 Item.create = (nuevo_body, filesInfo, result) => {
-    // sql.query("INSERT INTO catalogo SET ?", nuevo_body, (err, res) => {
-    //     if (err) {
-    //         console.log("error: ", err);
-    //         result(err, null);
-    //         return;
-    //     }
-
-
-
-    //     result(null, { id: res.insertId, ...nuevo_body });
-    // });
 
     const query = util.promisify(sql.query).bind(sql);
     (async () => {
@@ -67,8 +56,9 @@ Item.findByIdCliente = (id, result) => {
             row[0].usuario = usuario_[0]
             row[0].imagenes = imagenes_
             result(null, row[0]);
-        } finally {
             query.end();
+        } catch (error) {
+            console.error(error);
         }
     })()
 };
@@ -141,7 +131,7 @@ Item.updateById = (id, body, result) => {
         "UPDATE catalogo  SET ? WHERE id_catal = ?", [body, id],
         (err, res) => {
             if (err) {
-                console.log("error: ", err);
+                console.error("error: ", err);
                 result(null, err);
                 return;
             }
@@ -159,7 +149,7 @@ Item.updateById = (id, body, result) => {
 Item.remove = (id, result) => {
     sql.query("DELETE FROM catalogo WHERE id_catal = ?", id, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(null, err);
             return;
         }

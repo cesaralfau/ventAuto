@@ -6,7 +6,7 @@ const _ = require('lodash');
 
 
 // constructor
-const Item = function(item_) {
+const Item = function (item_) {
     this.id_catal = req.body.id_catal;
     this.fileName = req.body.fileName;
 };
@@ -14,7 +14,7 @@ const Item = function(item_) {
 Item.create = (nuevo_body, result) => {
     sql.query("INSERT INTO imagenes SET ?", nuevo_body, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(err, null);
             return;
         }
@@ -27,11 +27,11 @@ Item.create = (nuevo_body, result) => {
 
 Item.findById = (id, result) => {
     const query = util.promisify(sql.query).bind(sql);
-    (async() => {
+    (async () => {
         try {
             const row = await query(`SELECT * FROM imagenes WHERE id_interes = ${id}`);
             // const marca_modelo = await query(`SELECT * FROM marcamodelo WHERE id_marcamodelo = ${ row[0].id_marcamodelo}`);
-            const usuario_ = await query(`SELECT * FROM usuarios WHERE id_user = ${ row[0].id_user}`)
+            const usuario_ = await query(`SELECT * FROM usuarios WHERE id_user = ${row[0].id_user}`)
             row[0].marcamodelo = marca_modelo[0]
             row[0].usuario = usuario_[0]
             result(null, row[0]);
@@ -91,7 +91,7 @@ Item.findById = (id, result) => {
 //         "UPDATE imagenes  SET ? WHERE id_catal = ?", [body, id],
 //         (err, res) => {
 //             if (err) {
-//                 console.log("error: ", err);
+//                 console.error("error: ", err);
 //                 result(null, err);
 //                 return;
 //             }
@@ -109,7 +109,7 @@ Item.findById = (id, result) => {
 // Item.remove = (id, result) => {
 //     sql.query("DELETE FROM imagenes WHERE id_catal = ?", id, (err, res) => {
 //         if (err) {
-//             console.log("error: ", err);
+//             console.error("error: ", err);
 //             result(null, err);
 //             return;
 //         }

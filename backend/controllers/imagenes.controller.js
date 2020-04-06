@@ -29,20 +29,15 @@ exports.create = (req, res) => {
 };
 
 
-exports.getOnePhoto = async(req, res) => {
+exports.getOnePhoto = async (req, res) => {
     let file = req.params.fileName;
-    console.log('>>>>>>>>>>>>>>>>');
-
-    console.log('req.params', req.params);
-    console.log('>>>>>>>>>>>>>>>>');
-    console.log('file', file);
 
     await res.sendFile(path.resolve("./uploads/" + file));
 };
 
 // Retrieve all Usuarios from the database.
-exports.findAll = async(req, res) => {
-    await Item.getAll(async(err, data) => {
+exports.findAll = async (req, res) => {
+    await Item.getAll(async (err, data) => {
         if (err)
             res.status(500).send({
                 message: err.message || "Algo salio mal buscando los items del interes."

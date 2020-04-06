@@ -1,7 +1,7 @@
 const sql = require("../config/connection");
 
 // constructor
-const Item = function(item_) {
+const Item = function (item_) {
     this.marca = item_.marca;
     this.modelo = item_.modelo;
 };
@@ -9,7 +9,7 @@ const Item = function(item_) {
 Item.create = (nuevo_body, result) => {
     sql.query("INSERT INTO marcamodelo SET ?", nuevo_body, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(err, null);
             return;
         }
@@ -20,13 +20,13 @@ Item.create = (nuevo_body, result) => {
 Item.findById = (id, result) => {
     sql.query(`SELECT * FROM marcamodelo WHERE id_marcamodelo = ${id}`, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(err, null);
             return;
         }
 
         if (res.length) {
-            console.log("found customer: ", res[0]);
+
             result(null, res[0]);
             return;
         }
@@ -39,7 +39,7 @@ Item.findById = (id, result) => {
 Item.getAll = result => {
     sql.query("SELECT * FROM marcamodelo", (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(null, err);
             return;
         }
@@ -53,7 +53,7 @@ Item.updateById = (id, body, result) => {
         "UPDATE marcamodelo  SET ? WHERE id_marcamodelo = ?", [body, id],
         (err, res) => {
             if (err) {
-                console.log("error: ", err);
+                console.error("error: ", err);
                 result(null, err);
                 return;
             }
@@ -71,7 +71,7 @@ Item.updateById = (id, body, result) => {
 Item.remove = (id, result) => {
     sql.query("DELETE FROM marcamodelo WHERE id_marcamodelo = ?", id, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(null, err);
             return;
         }

@@ -1,7 +1,7 @@
 const sql = require("../config/connection");
 
 // constructor
-const Usuario = function(usuario) {
+const Usuario = function (usuario) {
     this.correo_user = usuario.correo_user;
     this.nom_user = usuario.nom_user;
     this.telef_user = usuario.telef_user;
@@ -12,22 +12,20 @@ const Usuario = function(usuario) {
 Usuario.create = (nuevo_usuario, result) => {
     sql.query("INSERT INTO usuarios SET ?", nuevo_usuario, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(err, null);
             return;
         }
 
-        console.log("created customer: ", { id: res.insertId, ...nuevo_usuario });
         result(null, { id: res.insertId, ...nuevo_usuario });
     });
 };
 
 Usuario.login = (user, result) => {
     sql.query(`select * from usuarios where correo_user = '${user.correo_user}' AND passw_user = '${user.passw_user}' limit 1`, (err, res) => {
-        console.log('err ', err);
-        console.log('res ', res);
+
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(err, null);
             return;
         }
@@ -45,10 +43,9 @@ Usuario.login = (user, result) => {
 
 Usuario.isLogin = (user, result) => {
     sql.query(`select * from usuarios where correo_user = '${user.correo_user}' AND passw_user = '${user.passw_user}' limit 1`, (err, res) => {
-        console.log('err ', err);
-        console.log('res ', res);
+
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(err, false);
             return;
         }
@@ -66,13 +63,13 @@ Usuario.isLogin = (user, result) => {
 Usuario.findById = (id, result) => {
     sql.query(`SELECT * FROM usuarios WHERE id_user = ${id}`, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(err, null);
             return;
         }
 
         if (res.length) {
-            console.log("found customer: ", res[0]);
+
             result(null, res[0]);
             return;
         }
@@ -85,12 +82,11 @@ Usuario.findById = (id, result) => {
 Usuario.getAll = result => {
     sql.query("SELECT * FROM usuarios", (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(null, err);
             return;
         }
 
-        console.log("usuarios: ", res);
         result(null, res);
     });
 };
@@ -100,7 +96,7 @@ Usuario.updateById = (id, usuario, result) => {
         "UPDATE usuarios  SET ? WHERE id_user = ?", [usuario, id],
         (err, res) => {
             if (err) {
-                console.log("error: ", err);
+                console.error("error: ", err);
                 result(null, err);
                 return;
             }
@@ -111,7 +107,6 @@ Usuario.updateById = (id, usuario, result) => {
                 return;
             }
 
-            console.log("updated usuario: ", { id: id, ...usuario });
             result(null, { id: id, ...usuario });
         }
     );
@@ -120,7 +115,7 @@ Usuario.updateById = (id, usuario, result) => {
 Usuario.remove = (id, result) => {
     sql.query("DELETE FROM usuarios WHERE id_user = ?", id, (err, res) => {
         if (err) {
-            console.log("error: ", err);
+            console.error("error: ", err);
             result(null, err);
             return;
         }
@@ -131,7 +126,7 @@ Usuario.remove = (id, result) => {
             return;
         }
 
-        console.log("deleted customer with id: ", id);
+        console.error("deleted customer with id: ", id);
         result(null, res);
     });
 };
