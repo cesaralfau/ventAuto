@@ -48,15 +48,21 @@ Item.findByIdCliente = (id, result) => {
     const query = util.promisify(sql.query).bind(sql);
     (async () => {
         try {
-            const row = await query(`SELECT * FROM catalogo WHERE id_user = ${id}`);
-            const marca_modelo = await query(`SELECT * FROM marcamodelo WHERE id_marcamodelo = ${row[0].id_marcamodelo}`);
-            const usuario_ = await query(`SELECT * FROM usuarios WHERE id_user = ${row[0].id_user}`)
-            const imagenes_ = await query(`SELECT * FROM imagenes WHERE id_catal = ${id}`)
-            row[0].marcamodelo = marca_modelo[0]
-            row[0].usuario = usuario_[0]
-            row[0].imagenes = imagenes_
-            result(null, row[0]);
+            const catalogo = []
+            const rows = await query(`SELECT * FROM catalogo WHERE id_user = ${id}`);
+            for (let i = 0; i < rows.length; i++) {
+                const element = rows[i];
+                const marca_modelo = await query(`SELECT * FROM marcamodelo WHERE id_marcamodelo = ${element.id_marcamodelo}`);
+                const usuario_ = await query(`SELECT * FROM usuarios WHERE id_user = ${element.id_user}`);
+                const imagenes_ = await query(`SELECT * FROM imagenes WHERE id_catal = ${element.id_catal}`)
+                element.marcamodelo = marca_modelo[0]
+                element.usuario = usuario_[0]
+                element.imagenes = imagenes_
+                catalogo.push(element)
+            }
+            result(null, catalogo);
             query.end();
+
         } catch (error) {
             console.error(error);
         }
