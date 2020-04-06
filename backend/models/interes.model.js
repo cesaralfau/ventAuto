@@ -7,69 +7,57 @@ var nodemailer = require("nodemailer");
 
 
 // constructor
-const Item = function(item_) {
-    //     this.id_catal = item_.id_catal,
-    //     this.id_user = item_.id_user,
-    //     this.nombre_no_registrado = item_.nombre_no_registrado,
-    //     this.correo_no_registrado = item_.correo_no_registrado,
-    //     this.telef_no_registrado = item_.telef_no_registrado
-    //     this.marcamodelo = item_.marcamodelo;
-    //     this.usuario = item_.usuario;
-    this.nombreinteres = item_.nombreinteres;
-    this.correointeres = item_.correointeres;
-    this.telefonointeres = item_.telefonointeres;
-
-
+const Item = function (item_) {
+    this.id_catal = item_.id_catal;
+    this.id_user = item_.id_user;
+    this.nombre_no_registrado = item_.nombre_no_registrado;
+    this.correo_no_registrado = item_.correo_no_registrado;
+    this.telef_no_registrado = item_.telef_no_registrado;
 };
 
 Item.create = (nuevo_body, result) => {
-    console.log("");
-    console.log("");
-    console.log("");
-    console.log("---------------");
-    console.log("");
-    console.log(nuevo_body);
-    console.log("");
-    console.log("---------------");
-    console.log("");
-    console.log("");
-    console.log("");
-    console.log("");
+    const query = util.promisify(sql.query).bind(sql);
+    (async () => {
+        try {
+            const info = await query("INSERT INTO interes SET ?", nuevo_body);
+            let infoUsuario;
+            if (nuevo_body.id_user) {
+                infoUsuario = await query(`SELECT * FROM usuarios WHERE id_user = ${nuevo_body.id_user}`);
+            }
+            infoCatalogo = await query(`SELECT * FROM catalogo WHERE id_catal = ${nuevo_body.id_catal}`);
 
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'elalfau@gmail.com',
-            pass: 'guitarra19'
-        }
-    });
+            infoVendedor = await query(`SELECT * FROM usuarios WHERE id_user = ${infoCatalogo.id_user}`);
 
-    var mailOptions = {
-        from: 'elalfau@gmail.com',
-        to: 'alfaucesar_@hotmail.com',
-        subject: 'PRUEBA FUNCIONAAAA',
-        text: 'ENVIO EXITOSO BUDDY'
-    };
-
-    transporter.sendMail(mailOptions, function(error, info) {
-        if (error) {
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'elalfau@gmail.com',
+                    pass: 'guitarra19'
+                }
+            });
+            var mailOptions = {
+                from: 'elalfau@gmail.com',
+                to: infoVendedor.correo_user,
+                subject: 'VENTAUTO: NOTIFICACION DE INTERES',
+                text: `El siguiente usuario le a dado interes a la siguiente publicación: ${infoCatalogo.marca}, ${infoCatalogo.modelo}, ${infoCatalogo.anio_catal} 
+                \n\n Nombre: ${nuevo_body.id_user ? infoUsuario.nom_user : nuevo_body.nombre_no_registrado}, Correo: ${nuevo_body.id_user ? infoUsuario.correo_user : nuevo_body.correo_no_registrado},Telefono: ${nuevo_body.id_user ? infoUsuario.telef_user : nuevo_body.telef_no_registrado}`
+            };
+            await transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.error(error);
+                    result(error, null);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                    result(null, { msg: "pruebas" });
+                }
+            });
+            result(null, { id: info.insertId, ...nuevo_body });
+            query.end();
+        } catch (error) {
             console.error(error);
-            result(error, null);
-        } else {
-            console.log('Email sent: ' + info.response);
-            result(null, { msg: "pruebas" });
         }
-    });
-
-    // sql.query("INSERT INTO interes SET ?", nuevo_body, (err, res) => {
-    //     if (err) {
-    //         console.log("error: ", err);
-    //         return;
-    //     }
-
-    //     result(null, { id: res.insertId, ...nuevo_body });
-    // });
-};
+    })
+}
 
 // Item.findById = (id, result) => {
 //     const query = util.promisify(sql.query).bind(sql);

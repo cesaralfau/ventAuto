@@ -1,95 +1,88 @@
 <div class="row mt-3">
-    <div class="col-12 p-0">
-        <div class="row p-0" style="max-height: 7rem;">
-            <div class="col-12 col-md-5">
-                <div class="media-body">
-                    <h4 class="titulos_azules mb-2">DETALLES DEL VEHICULO </h4>
-                    <h5 class="mt-0 mb-2"><span class="negrita">Marca:</span>&nbsp; {{vehiculoSeleccionado?.marcamodelo.marca}}</h5>
-                    <h5 class="mt-0 mb-2"><span class="negrita">Modelo:</span>&nbsp; {{vehiculoSeleccionado?.marcamodelo.modelo}}</h5>
-                    <h5 class="mt-0 mb-2"><span class="negrita">Año:</span>&nbsp; {{vehiculoSeleccionado?.anio_catal}}</h5>
-                    <h5 class="mt-0 mb-2"><span class="negrita">Color:</span>&nbsp; {{vehiculoSeleccionado?.color_catal}}</h5>
-                    <h5 class="mt-0 mb-2"><span class="negrita">Interior:</span>&nbsp; {{vehiculoSeleccionado?.inter_catal}}</h5>
-                    <h5 class="mt-0 mb-2"><span class="negrita">Transmisión:</span>&nbsp; {{vehiculoSeleccionado?.trans_catal}}</h5>
-                    <h5 class="mt-0 mb-2"><span class="negrita">Cilindraje:</span>&nbsp; {{vehiculoSeleccionado?.cilind_catal}}</h5>
-                    <h5 class="mt-0 mb-2"><span class="negrita">Estado:</span>&nbsp; {{vehiculoSeleccionado?.estado_catal}}</h5>
-                </div>
-            </div>
-            <div class="col-12 col-md-2"></div>
-            <div class="col-12 col-md-5">
-                <div class="media-body">
-                    <h4 class="titulos_azules mb-2">DETALLES DEL VENDEDOR</h4>
-                    <h5 class="mt-0 mb-2">{{vehiculoSeleccionado?.usuario.nom_user}}</h5>
-                    <h5 class="mt-0 mb-2">{{vehiculoSeleccionado?.usuario.telef_user}}</h5>
-                    <h5 class="mt-0 mb-2">{{vehiculoSeleccionado?.usuario.correo_user}}</h5>
-                    <h5 class="mt-0 mb-2">{{vehiculoSeleccionado?.usuario.resid_user}}</h5>
-                    <button style="width:240px;" type="button" id="interesa" class="btn btn-primary redondo mt-3" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="far fa-thumbs-up"></i> &nbsp;Me Interesa</button>
-                </div>
-            </div>
-            <div class="col-12 d-flex justify-content-end">
-                <h4 class="titulos_azules mt-1">RD$ {{vehiculoSeleccionado?.precio_catal.toLocaleString('en')}}</h4>
-            </div>
+  <div class="col-12 p-0">
+    <div class="row p-0" style="max-height: 7rem;">
+      <div class="col-12 col-md-5">
+        <div class="media-body">
+          <h4 class="titulos_azules mb-2">DETALLES DEL VEHICULO</h4>
+          <h5 class="mt-0 mb-2"><span class="negrita">Marca:</span>&nbsp; {{ vehiculoSeleccionado?.marcamodelo.marca }}</h5>
+          <h5 class="mt-0 mb-2"><span class="negrita">Modelo:</span>&nbsp; {{ vehiculoSeleccionado?.marcamodelo.modelo }}</h5>
+          <h5 class="mt-0 mb-2"><span class="negrita">Año:</span>&nbsp; {{ vehiculoSeleccionado?.anio_catal }}</h5>
+          <h5 class="mt-0 mb-2"><span class="negrita">Color:</span>&nbsp; {{ vehiculoSeleccionado?.color_catal }}</h5>
+          <h5 class="mt-0 mb-2"><span class="negrita">Interior:</span>&nbsp; {{ vehiculoSeleccionado?.inter_catal }}</h5>
+          <h5 class="mt-0 mb-2"><span class="negrita">Transmisión:</span>&nbsp; {{ vehiculoSeleccionado?.trans_catal }}</h5>
+          <h5 class="mt-0 mb-2"><span class="negrita">Cilindraje:</span>&nbsp; {{ vehiculoSeleccionado?.cilind_catal }}</h5>
+          <h5 class="mt-0 mb-2"><span class="negrita">Estado:</span>&nbsp; {{ vehiculoSeleccionado?.estado_catal }}</h5>
         </div>
+      </div>
+      <div class="col-12 col-md-2"></div>
+      <div class="col-12 col-md-5">
+        <div class="media-body">
+          <h4 class="titulos_azules mb-2">DETALLES DEL VENDEDOR</h4>
+          <h5 class="mt-0 mb-2">{{ vehiculoSeleccionado?.usuario.nom_user }}</h5>
+          <h5 class="mt-0 mb-2">{{ vehiculoSeleccionado?.usuario.telef_user }}</h5>
+          <h5 class="mt-0 mb-2">{{ vehiculoSeleccionado?.usuario.correo_user }}</h5>
+          <h5 class="mt-0 mb-2">{{ vehiculoSeleccionado?.usuario.resid_user }}</h5>
+          <button style="width: 240px;" type="button" id="interesa" class="btn btn-primary redondo mt-3" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="far fa-thumbs-up"></i> &nbsp;Me Interesa</button>
+        </div>
+      </div>
+      <div class="col-12 d-flex justify-content-end">
+        <h4 class="titulos_azules mt-1">RD$ {{ vehiculoSeleccionado?.precio_catal.toLocaleString('en') }}</h4>
+      </div>
     </div>
-    <!--CONTENIDO DEL CARROUSEL-->
-    <!-- <div class="" *ngFor="let img of vehiculoSeleccionado?.imagenes">
+  </div>
+  <!--CONTENIDO DEL CARROUSEL-->
+  <!-- <div class="" *ngFor="let img of vehiculoSeleccionado?.imagenes">
         <img class="img-fluid" src="http://localhost:3000/imagenes/archivo/{{img.fileName}}" alt="First slide">
     </div> -->
-    <div class="col-12">
-        <carousel [(activeSlide)]="activeSlideIndex">
-            <slide *ngFor="let slide of vehiculoSeleccionado?.imagenes; let index = index">
-                <img id="slide" src="http://localhost:3000/imagenes/archivo/{{slide.fileName}}" alt="image slide" class="imgSlide" />
-                <div class="overlay position-absolute w-100 h-100">
-                </div>
-            </slide>
-        </carousel>
-    </div>
+  <div class="col-12">
+    <carousel [(activeSlide)]="activeSlideIndex">
+      <slide *ngFor="let slide of vehiculoSeleccionado?.imagenes; let index = index">
+        <img id="slide" src="http://localhost:3000/imagenes/archivo/{{ slide.fileName }}" alt="image slide" class="imgSlide" />
+        <div class="overlay position-absolute w-100 h-100"></div>
+      </slide>
+    </carousel>
+  </div>
 </div>
 <!--   MODAL Y SU CONTENIDO -->
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content redondo">
-            <div class="modal-header">
-                <!-- <center> -->
-
-                <p class="modal-title" id="exampleModalLabel">Avisaremos Al Vendedor Sobre Su Interes Por El Vehiculo (Favor Completar Todos Los Campos)
-                </p>
-
-                <!-- </center> -->
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-            </div>
-            <div class="modal-body ">
-                <form [formGroup]="formInteres">
-                    <div class="form-group">
-                        <!-- <center> -->
-                        <label for="nombre_interes" class="col-form-label">Nombre:</label>
-                        <input type="text" formControlName="nombreinteres" class="form-control" id="nombreinteres" placeholder="Introducir Nombre">
-                        <!-- </center> -->
-                    </div>
-                    <div class="form-group">
-                        <!-- <center> -->
-                        <label for="correo_interes" class="col-form-label">Correo Electronico:</label>
-                        <input type="email" formControlName="correointeres" class="form-control" id="correointeres" placeholder="Ejemplo@hotmail.com">
-                        <!-- </center> -->
-                    </div>
-                    <div class="form-group">
-                        <!-- <center> -->
-                        <label for="tel_interes" class="col-form-label">Telefono De Contacto:</label>
-                        <input class="form-control" formControlName="telefonointeres" id="telinteres" placeholder="###-###-####">
-                        <!-- </center> -->
-                    </div>
-                    <div class="modal-footer">
-                        <button style="width:140px;" type="button" class="btn btn-danger redondo" data-dismiss="modal">Cerrar</button>
-                        <button style="width:140px;" type="button" (click)="enviarCorreo()" class="btn btn-primary redondo"> Enviar</button>
-                    </div>
-                </form>
-            </div>
-            <!-- <div class="modal-footer">
-                <button style="width:140px;" type="button" class="btn btn-danger redondo" data-dismiss="modal">Cerrar</button>
-                <button style="width:140px;" type="button" class="btn btn-primary redondo"> Enviar</button>
-            </div> -->
-        </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content redondo">
+      <div class="modal-header">
+        <p class="modal-title" id="exampleModalLabel">Avisaremos Al Vendedor Sobre Su Interes Por El Vehiculo {{ !isLogin ? '(Favor Completar Todos Los Campos)' : '' }}</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngIf="isLogin" class="modal-body">
+        <form [formGroup]="formInteres">
+          <h2>{{ cuenta.nom_user }}, esta seguro de que le interesa este vehiculo</h2>
+          <div class="modal-footer">
+            <button style="width: 140px;" type="button" class="btn btn-danger redondo" data-dismiss="modal">Cerrar</button>
+            <button style="width: 140px;" type="button" (click)="enviarCorreo()" class="btn btn-primary redondo">Aceptar</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="!isLogin" class="modal-body">
+        <form [formGroup]="formInteres">
+          <div class="form-group">
+            <label for="nombre_interes" class="col-form-label">Nombre:</label>
+            <input type="text" formControlName="nombreinteres" class="form-control" id="nombreinteres" placeholder="Introducir Nombre" />
+          </div>
+          <div class="form-group">
+            <label for="correo_interes" class="col-form-label">Correo Electronico:</label>
+            <input type="email" formControlName="correointeres" class="form-control" id="correointeres" placeholder="Ejemplo@hotmail.com" />
+          </div>
+          <div class="form-group">
+            <label for="tel_interes" class="col-form-label">Telefono De Contacto:</label>
+            <input class="form-control" formControlName="telefonointeres" id="telinteres" placeholder="###-###-####" />
+          </div>
+          <div class="modal-footer">
+            <button id="btnCerrar" style="width: 140px;" type="button" class="btn btn-danger redondo" data-dismiss="modal">Cerrar</button>
+            <button style="width: 140px;" type="button" (click)="enviarCorreo()" class="btn btn-primary redondo">Enviar</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>

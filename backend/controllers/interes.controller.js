@@ -3,11 +3,11 @@ const Item = require("../models/interes.model");
 // Create and Save a new Item
 exports.create = (req, res) => {
     // Validate request
-    // if (!req.body) {
-    //     res.status(400).send({
-    //         message: "Peticion no puede estar vacia!."
-    //     });
-    // }
+    if (!req.body) {
+        res.status(400).send({
+            message: "Peticion no puede estar vacia!."
+        });
+    }
 
     // Create a Customer
 
@@ -30,8 +30,8 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Usuarios from the database.
-exports.findAll = async(req, res) => {
-    await Item.getAll(async(err, data) => {
+exports.findAll = async (req, res) => {
+    await Item.getAll(async (err, data) => {
         if (err)
             res.status(500).send({
                 message: err.message || "Algo salio mal buscando los items del interes."
