@@ -51,7 +51,21 @@ Item.create = (nuevo_body, result) => {
                     result(error, null);
                 } else {
                     console.log('Email sent: ' + info.response);
-                    result(null, { msg: "pruebas" });
+                }
+            });
+            var mailOptions2 = {
+                from: 'elalfau@gmail.com',
+                to: nuevo_body.id_user ? infoUsuario[0].correo_user : nuevo_body.correo_no_registrado,
+                subject: 'VENTAUTO: NOTIFICACION DE INTERES',
+                text: `Usted le a dado interes a la siguiente publicación: ${infoMarcaModelo[0].marca}, ${infoMarcaModelo[0].modelo}, ${infoCatalogo[0].anio_catal}`
+
+            };
+            await transporter.sendMail(mailOptions2, function(error, info) {
+                if (error) {
+                    console.error(error);
+                    result(error, null);
+                } else {
+                    console.log('Email sent: ' + info.response);
                 }
             });
             result(null, { id: info.insertId, ...nuevo_body });
