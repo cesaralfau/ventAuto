@@ -6,7 +6,7 @@ const Usuario = require("../models/user.model");
 
 
 // constructor
-const Item = function(item_) {
+const Item = function (item_) {
     this.anio_catal = item_.anio_catal;
     this.cilind_catal = item_.cilind_catal;
     this.color_catal = item_.color_catal;
@@ -34,7 +34,7 @@ Item.create = (nuevo_body, filesInfo, result) => {
     // });
 
     const query = util.promisify(sql.query).bind(sql);
-    (async() => {
+    (async () => {
         try {
             const infoCatal = await query("INSERT INTO catalogo SET ?", nuevo_body);
             for (let i = 0; i < filesInfo.length; i++) {
@@ -55,9 +55,26 @@ Item.create = (nuevo_body, filesInfo, result) => {
     })()
 };
 
+Item.findByIdCliente = (id, result) => {
+    const query = util.promisify(sql.query).bind(sql);
+    (async () => {
+        try {
+            const row = await query(`SELECT * FROM catalogo WHERE id_user = ${id}`);
+            const marca_modelo = await query(`SELECT * FROM marcamodelo WHERE id_marcamodelo = ${row[0].id_marcamodelo}`);
+            const usuario_ = await query(`SELECT * FROM usuarios WHERE id_user = ${row[0].id_user}`)
+            const imagenes_ = await query(`SELECT * FROM imagenes WHERE id_catal = ${id}`)
+            row[0].marcamodelo = marca_modelo[0]
+            row[0].usuario = usuario_[0]
+            row[0].imagenes = imagenes_
+            result(null, row[0]);
+        } finally {
+            query.end();
+        }
+    })()
+};
 Item.findById = (id, result) => {
     const query = util.promisify(sql.query).bind(sql);
-    (async() => {
+    (async () => {
         try {
             const row = await query(`SELECT * FROM catalogo WHERE id_catal = ${id}`);
             const marca_modelo = await query(`SELECT * FROM marcamodelo WHERE id_marcamodelo = ${row[0].id_marcamodelo}`);
@@ -74,7 +91,7 @@ Item.findById = (id, result) => {
 };
 Item.searchAll = (id_marcamodelo, desde, hasta, estado, result) => {
     const query = util.promisify(sql.query).bind(sql);
-    (async() => {
+    (async () => {
         try {
             const catalogo = []
             const rows = await query(`SELECT * FROM catalogo WHERE id_marcamodelo = ${id_marcamodelo} AND estado_catal = '${estado}' AND anio_catal BETWEEN ${desde} AND ${hasta}`);
@@ -99,7 +116,7 @@ Item.searchAll = (id_marcamodelo, desde, hasta, estado, result) => {
 Item.getAll = async result => {
 
     const query = util.promisify(sql.query).bind(sql);
-    (async() => {
+    (async () => {
         try {
             const catalogo = []
             const rows = await query('select * from catalogo');

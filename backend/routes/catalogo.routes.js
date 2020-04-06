@@ -14,6 +14,9 @@ module.exports = app => {
     // Retrieve a single Customer with customerId
     app.get("/catalogo/:id", item.findOne);
 
+    // Retrieve a single Customer with customerId
+    app.get("/catalogo/por_cliente/:id", item.findOneByCliente);
+
     // Update a Customer with customerId
     app.put("/catalogo/:id", item.update);
 

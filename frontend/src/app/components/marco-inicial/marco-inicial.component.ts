@@ -5,24 +5,22 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-marco-inicial',
   templateUrl: './marco-inicial.component.html',
-  styleUrls: ['./marco-inicial.component.css']
+  styleUrls: ['./marco-inicial.component.css'],
 })
 export class MarcoInicialComponent implements OnInit {
-  cuenta
+  cuenta;
   isLogin: any;
-  constructor(private dbServ:DBservice, private router:Router) { }
+  constructor(private dbServ: DBservice, private router: Router) {}
 
   async ngOnInit() {
     try {
-      this.isLogin=await this.dbServ.isLoggedIn()
-      this.cuenta= JSON.parse(this.dbServ.getUserInfo())
+      this.isLogin = await this.dbServ.isLoggedIn();
+      this.cuenta = JSON.parse(this.dbServ.getUserInfo());
     } catch (error) {}
   }
 
-cerrarSesion(){
-  this.dbServ.deleteUserInfo()
-  setTimeout(() => {
-    this.router.navigate(['/'])
-  }, 10);
-}
+  logOut() {
+    this.dbServ.deleteUserInfo();
+    this.router.navigateByUrl('/');
+  }
 }

@@ -11,7 +11,7 @@ exports.create = (req, res) => {
 
     const filesInfo = req.files.uploads
     const catalInfo = JSON.parse(req.body.info)
-        // Create a Customer
+    // Create a Customer
     const item_ = new Item({
         anio_catal: catalInfo.anio_catal,
         cilind_catal: catalInfo.cilind_catal,
@@ -36,8 +36,8 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Usuarios from the database.
-exports.findAll = async(req, res) => {
-    await Item.getAll(async(err, data) => {
+exports.findAll = async (req, res) => {
+    await Item.getAll(async (err, data) => {
         if (err)
             res.status(500).send({
                 message: err.message || "Algo salio mal buscando los items del catalogo."
@@ -49,6 +49,22 @@ exports.findAll = async(req, res) => {
 // Find a single Item with a UsuarioId
 exports.findOne = (req, res) => {
     Item.findById(req.params.id, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `No se encontro item en el catalogo con id ${req.params.id}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "Error al encontrar item en el catalogo con id " + req.params.id
+                });
+            }
+        } else res.send(data);
+    });
+};
+// Find a single Item with a UsuarioId
+exports.findOneByCliente = (req, res) => {
+    Item.findByIdCliente(req.params.id, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({

@@ -49,10 +49,10 @@ export class DBservice {
     // localStorage.setIteADMm('token', token);
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
   }
-  
+
   login(arg) {
     return this.peticion('login', 'post', JSON.stringify(arg));
-    }
+  }
 
   async isLoggedIn() {
     const userPayload = this.getUserInfo();
@@ -63,15 +63,15 @@ export class DBservice {
       let user;
       try {
         user = JSON.parse(userPayload);
-        console.log(`user `, user );
-        res = await this.revisarSesionEnDB({"correo_user": user.correo_user? user.correo_user:'', "passw_user":user.passw_user?user.passw_user:''}).toPromise()
+        console.log(`user `, user);
+        res = await this.revisarSesionEnDB({ correo_user: user.correo_user ? user.correo_user : '', passw_user: user.passw_user ? user.passw_user : '' }).toPromise();
       } catch (error) {
-        res =false
+        res = false;
       }
-      console.log(`>>>>>`,res );
+      console.log(`>>>>>`, res);
       return res;
     } else {
-      res = false
+      res = false;
       return res;
     }
   }
@@ -83,7 +83,7 @@ export class DBservice {
   createUser(arg) {
     return this.peticion('usuarios', 'post', JSON.stringify(arg));
   }
-  revisarSesionEnDB(arg):any {
+  revisarSesionEnDB(arg): any {
     return this.peticion('isLogin', 'post', JSON.stringify(arg));
   }
   // =====================================================================
@@ -95,34 +95,35 @@ export class DBservice {
     // return this.peticion('catalogo', 'post', JSON.stringify(arg));
   }
   createCatalogo(arg) {
-    return this.http.post(this.url+'/catalogo', arg);
+    return this.http.post(this.url + '/catalogo', arg);
     // return this.peticion('catalogo', 'post', arg);
     // return this.peticion('catalogo', 'post', JSON.stringify(arg));
   }
 
-  getCatalogoInfo(){
+  getCatalogoInfo() {
     return this.peticion('catalogo', 'get');
   }
 
-  getCatalogoById(id){
-    
-    return this.peticion(`catalogo/${id}`,'get')
+  getCatalogoById(id) {
+    return this.peticion(`catalogo/${id}`, 'get');
+  }
+  getCatalogoByIdCliente(id) {
+    return this.peticion(`catalogo/por_cliente/${id}`, 'get');
   }
 
-  getCatalogoBusqueda(arg){
+  getCatalogoBusqueda(arg) {
+    const id_marcamodelo = arg.id_marcamodelo;
+    const desde = arg.desde;
+    const hasta = arg.hasta;
+    const estado = arg.estado;
 
-    const id_marcamodelo=arg.id_marcamodelo
-    const desde=arg.desde
-    const hasta=arg.hasta
-    const estado=arg.estado
-
-    return this.peticion(`catalogo/${id_marcamodelo}/${desde}/${hasta}/${estado}`,'get')
+    return this.peticion(`catalogo/${id_marcamodelo}/${desde}/${hasta}/${estado}`, 'get');
   }
 
   // =====================================================================
   //  MARCA MODELO
   // =====================================================================
-  getMarcaModeloInfo(){
+  getMarcaModeloInfo() {
     return this.peticion('marcamodelo', 'get');
   }
   // =====================================================================

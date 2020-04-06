@@ -1,14 +1,19 @@
-.head .header {
-    height: 7rem;
-    top: 0;
-    position: absolute;
-    background: rgb(32, 58, 145);
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-  
-  .contenidoPrincipal {
-    height: calc(100% -7rem);
-  }
-  
+.head {
+  height: 7rem;
+  top: 0;
+  background: rgb(32, 58, 145);
+  width: 100%;
+}
+
+.contenidoPrincipal {
+  height: calc(100% -7rem);
+}
+
+#colorSky {
+  color: skyblue !important;
+}
+
+.dropCuenta {
+  position: absolute;
+  right: 2rem;
+}

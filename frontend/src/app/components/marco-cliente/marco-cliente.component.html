@@ -1,105 +1,117 @@
-<div class="row " style="height: 100vh;">
-    <div class="col-12 p-0 head" style="height: 7rem;">
-        <div></div>
-        <header class="header">
-            <img routerLink="/home" src="assets/images/logoweb1.png" />
-        </header>
-        <div *ngIf="isLogin">
-            {{cuenta.nom_user}} <i (click)="cerrarSesion()" class="fas fa-sign-out-alt"></i>
+<div class="row" style="height: 100vh;">
+  <div class="col-12 p-0 head d-flex justify-content-center align-items-center" style="height: 7rem;">
+    <div class="">
+      <div class="d-flex align-items-center dropCuenta">
+        <div class="btn-group" dropdown>
+          <a id="colorSky" dropdownToggle class="dropdown-toggle" aria-controls="dropdown-basic"> {{ cuenta.nom_user }} <span class="caret"></span> </a>
+
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem" [routerLink]="['/cliente/publicaciones']">
+              <a class="dropdown-item" id="dropdown-item"><i class="fas fa-address-card"></i>Mis publicaciones</a>
+            </li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem">
+              <a class="dropdown-item" id="dropdown-item" (click)="logOut()"><i class="fas fa-power-off"></i>Cerrar sesión</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </div>
+    <div>
+      <img routerLink="/home" src="assets/images/logoweb1.png" />
+    </div>
+  </div>
 
-    <!-- ============================================================================================================== -->
+  <!-- ============================================================================================================== -->
 
-    <!-- aqui esta todo lo que esta en el medio de la pag -->
-    <div class="col-12 contenidoPrincipal p-0">
-        <div class="d-flex" id="wrapper">
-            <div class="bg-light border-right" id="sidebar-wrapper">
-                <div class="menu">
-                    <div class="barralateral text-center">
-                        <img src="assets/images/buscar3.png" />
-                        <h3>Nueva Busqueda</h3>
-                        <br />
-                        <form [formGroup]="formBuscar">
-                            <b class=" text-italic">Selecionar Marca:</b>
+  <!-- aqui esta todo lo que esta en el medio de la pag -->
+  <div class="col-12 contenidoPrincipal p-0">
+    <div class="d-flex" id="wrapper">
+      <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="menu">
+          <div class="barralateral text-center">
+            <img src="assets/images/buscar3.png" />
+            <h3>Nueva Busqueda</h3>
+            <br />
+            <form [formGroup]="formBuscar">
+              <b class="text-italic">Selecionar Marca:</b>
 
-                            <div class="btn-group">
-                                <select (change)="selectMarca($event.target.value)" formControlName="marca" style="width:240px;" class="form-control redondo" id="marcas">
-                                    <option value="-1" disabled>Seleccione la marca</option>
-                                    <option *ngFor="let item of listaMarcaModeloFiltrado" value="{{item}}">{{item}}</option>
-                                </select>
-                            </div>
-                            <br />
+              <div class="btn-group">
+                <select (change)="selectMarca($event.target.value)" formControlName="marca" style="width: 240px;" class="form-control redondo" id="marcas">
+                  <option value="-1" disabled>Seleccione la marca</option>
+                  <option *ngFor="let item of listaMarcaModeloFiltrado" value="{{ item }}">{{ item }}</option>
+                </select>
+              </div>
+              <br />
 
-                            <b class=" text-italic">Selecionar Modelo:</b>
+              <b class="text-italic">Selecionar Modelo:</b>
 
-                            <div class="btn-group">
-                                <select style="width:240px;" formControlName="modelo" class="form-control redondo" id="modelos">
-                                    <option  *ngIf="formBuscar.controls['marca'].value !== '-1' " value="-1" disabled>Seleccione el modelo</option>
-                                    <option *ngIf="formBuscar.controls['marca'].value === '-1' " value="-1" disabled>Seleccione primero una marca</option>
-                                    <option *ngFor="let item of modelosFiltrados" value="{{item.id_marcamodelo}}">{{item.modelo}}
-                                </select>
-                            </div>
-                            <br />
+              <div class="btn-group">
+                <select style="width: 240px;" formControlName="modelo" class="form-control redondo" id="modelos">
+                  <option *ngIf="formBuscar.controls['marca'].value !== '-1'" value="-1" disabled>Seleccione el modelo</option>
+                  <option *ngIf="formBuscar.controls['marca'].value === '-1'" value="-1" disabled>Seleccione primero una marca</option>
+                  <option *ngFor="let item of modelosFiltrados" value="{{ item.id_marcamodelo }}">{{ item.modelo }} </option></select
+                >
+              </div>
+              <br />
 
-                            <b class=" text-italic">Seleccionar rango de Año:</b>
+              <b class="text-italic">Seleccionar rango de Año:</b>
 
-                            <div class="btn-group">
-                                <select style="width:240px;" formControlName="anio_desde" class="form-control redondo" id="años">
-                                    <option value="-1" disabled>Desde</option>
-                                    <option *ngFor="let item of aniosVehiculo" value="{{item}}">{{item}}</option>
+              <div class="btn-group">
+                <select style="width: 240px;" formControlName="anio_desde" class="form-control redondo" id="años">
+                  <option value="-1" disabled>Desde</option>
+                  <option *ngFor="let item of aniosVehiculo" value="{{ item }}">{{ item }}</option>
+                </select>
+              </div>
+              <br />
 
-                                </select>
-                            </div>
-                            <br />
+              <b class="text-italic"></b>
+              <br />
+              <div class="btn-group">
+                <select style="width: 240px;" formControlName="anio_hasta" class="form-control redondo" id="añosh">
+                  <option value="-1" disabled>Hasta</option>
+                  <option *ngFor="let item of aniosVehiculo" value="{{ item }}">{{ item }}</option>
+                </select>
+              </div>
+              <br />
 
-                            <b class=" text-italic"></b>
-                            <br>
-                            <div class="btn-group">
-                                <select style="width:240px;" formControlName="anio_hasta" class="form-control redondo" id="añosh">
-                                    <option value="-1" disabled>Hasta</option>
-                                    <option *ngFor="let item of aniosVehiculo" value="{{item}}">{{item}}</option>
-                                </select>
-                            </div>
-                            <br />
+              <b class="text-italic">Selecionar Estado:</b>
 
-                            <b class=" text-italic">Selecionar Estado:</b>
+              <div class="btn-group">
+                <select style="width: 240px;" formControlName="estado_catal" class="form-control redondo" id="estados">
+                  <option value="-1" disabled>Seleccione el estado</option>
+                  <option value="Nuevo">Nuevo</option>
+                  <option value="Usado">Usado</option>
+                  <option value="Nuevo/Usado">Nuevo/Usado</option>
+                </select>
+              </div>
 
-                            <div class="btn-group">
-                                <select style="width:240px;" formControlName="estado_catal" class="form-control redondo" id="estados">
-                                    <option value="-1" disabled>Seleccione el estado</option>
-                                    <option value="Nuevo">Nuevo</option>
-                                    <option value="Usado">Usado</option>
-                                    <option value="Nuevo/Usado">Nuevo/Usado</option>
-                                </select>
-                            </div>
+              <div class="mt-3">
+                <button style="width: 240px;" id="btncircular" class="btn btn-lg btn-primary mb-4 redondo" type="button" (click)="buscarVehiculo()">Buscar</button>
+                <button style="width: 240px;" id="btncircular" class="btn btn-lg btn-danger mb-4 redondo" type="button">Atras</button>
+              </div>
+            </form>
+            <br />
 
-                            <div class="mt-3">
-                                <button style="width:240px;" id="btncircular" class="btn btn-lg btn-primary  mb-4 redondo" type="button" (click)="buscarVehiculo()">Buscar</button>
-                                <button style="width:240px;" id="btncircular" class="btn btn-lg btn-danger  mb-4 redondo" type="button">Atras</button>
-                            </div>
-                        </form>
-                        <br />
+            <b class="text-italic">VentAutos © 2020 Copyright</b>
+          </div>
+        </div>
+      </div>
 
-                        <b class=" text-italic">VentAutos © 2020 Copyright</b>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page Content -->
-            <!--  =======================================================================================================================-->
-            <!-- boton para el sidebar -->
-            <div>
-                <button class="navbar-toggler btnMenu" id="menu-toggle" (click)="esconderMenu($event)">
+      <!-- Page Content -->
+      <!--  =======================================================================================================================-->
+      <!-- boton para el sidebar -->
+      <div>
+        <button class="navbar-toggler btnMenu" id="menu-toggle" (click)="esconderMenu($event)">
           <i class="fas fa-bars"></i>
         </button>
-            </div>
-            <!--  =======================================================================================================================-->
-            <div id="page-content-wrapper">
-                <!-- contenido pagina -->
-                <router-outlet></router-outlet>
-            </div>
-            <!--  =======================================================================================================================-->
-        </div>
+      </div>
+      <!--  =======================================================================================================================-->
+      <div id="page-content-wrapper">
+        <!-- contenido pagina -->
+        <router-outlet></router-outlet>
+      </div>
+      <!--  =======================================================================================================================-->
     </div>
+  </div>
 </div>
