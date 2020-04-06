@@ -18,6 +18,8 @@ export class MisPublicacionesComponent implements OnInit {
 
   async getMisPublicacione() {
     try {
+      console.log('>>>>', this.perfil);
+
       this.mispublicaciones = await this.dbServ.getCatalogoByIdCliente(this.perfil.id_user).toPromise();
     } catch (error) {
       console.error('ERROR BUSCANDO LAS PUBLICACIONES');

@@ -56,19 +56,16 @@ export class DBservice {
 
   async isLoggedIn() {
     const userPayload = this.getUserInfo();
-    console.log(`userPayload `, userPayload);
     let res = true;
 
     if (userPayload) {
       let user;
       try {
         user = JSON.parse(userPayload);
-        console.log(`user `, user);
         res = await this.revisarSesionEnDB({ correo_user: user.correo_user ? user.correo_user : '', passw_user: user.passw_user ? user.passw_user : '' }).toPromise();
       } catch (error) {
         res = false;
       }
-      console.log(`>>>>>`, res);
       return res;
     } else {
       res = false;

@@ -1,6 +1,6 @@
 <div class="row" style="height: 100vh;">
   <div class="col-12 p-0 head d-flex justify-content-center align-items-center" style="height: 7rem;">
-    <div class="">
+    <div *ngIf="isLogin" class="">
       <div class="d-flex align-items-center dropCuenta">
         <div class="btn-group" dropdown>
           <a id="colorSky" dropdownToggle class="dropdown-toggle" aria-controls="dropdown-basic"> {{ cuenta.nom_user }} <span class="caret"></span> </a>
