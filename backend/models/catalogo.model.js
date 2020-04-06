@@ -74,8 +74,9 @@ Item.findById = (id, result) => {
             row[0].usuario = usuario_[0]
             row[0].imagenes = imagenes_
             result(null, row[0]);
-        } finally {
             query.end();
+        } catch (error) {
+            console.error(error);
         }
     })()
 };
@@ -96,8 +97,9 @@ Item.searchAll = (id_marcamodelo, desde, hasta, estado, result) => {
                 catalogo.push(element)
             }
             result(null, catalogo);
-        } finally {
             query.end();
+        } catch (error) {
+            console.error(error);
         }
     })()
 };
