@@ -34,12 +34,12 @@ Item.create = (nuevo_body, result) => {
             var transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: 'elalfau@gmail.com',
-                    pass: 'guitarra19'
+                    user: 'ventautosisc@gmail.com',
+                    pass: 'ventautos1617'
                 }
             });
             var mailOptions = {
-                from: 'elalfau@gmail.com',
+                from: 'ventautosisc@gmail.com',
                 to: infoVendedor[0].correo_user,
                 subject: 'VENTAUTO: NOTIFICACION DE INTERES',
                 text: `El siguiente usuario le a dado interes a la siguiente publicación: ${infoMarcaModelo[0].marca}, ${infoMarcaModelo[0].modelo}, ${infoCatalogo[0].anio_catal} 
@@ -54,10 +54,11 @@ Item.create = (nuevo_body, result) => {
                 }
             });
             var mailOptions2 = {
-                from: 'elalfau@gmail.com',
+                from: 'ventautosisc@gmail.com',
                 to: nuevo_body.id_user ? infoUsuario[0].correo_user : nuevo_body.correo_no_registrado,
                 subject: 'VENTAUTO: NOTIFICACION DE INTERES',
-                text: `Usted le a dado interes a la siguiente publicación: ${infoMarcaModelo[0].marca}, ${infoMarcaModelo[0].modelo}, ${infoCatalogo[0].anio_catal}`
+                text: `Usted le a dado interes a la siguiente publicación: ${infoMarcaModelo[0].marca}, ${infoMarcaModelo[0].modelo}, ${infoCatalogo[0].anio_catal}
+                \n\n Publicado por: ${infoVendedor[0].nom_user}, Correo: ${infoVendedor[0].correo_user}, Telefono: ${infoVendedor[0].telef_user}`
 
             };
             await transporter.sendMail(mailOptions2, function(error, info) {
