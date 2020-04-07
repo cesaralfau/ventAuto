@@ -159,14 +159,17 @@ Item.remove = (id, result) => {
         try {
 
             const imagenes_ = await query(`SELECT * FROM imagenes WHERE id_catal = ${id}`)
-            imagenes_.forEach(img => {
+            for (let i = 0; i < imagenes_.length; i++) {
+                const img = imagenes_[i];
                 const res = await query(`DELETE * FROM imagenes WHERE id_imagenes = ${img.id_imagenes}`)
                 await fs.unlinkSync(path.resolve("./uploads/" + img.fileName));
-            });
+            }
+
             const intereses_ = await query(`SELECT * FROM interes WHERE id_catal = ${id}`)
-            intereses_.forEach(interes => {
+            for (let i = 0; i < intereses_.length; i++) {
+                const interes = intereses_[i];
                 const res = await query(`DELETE * FROM interes WHERE id_interes = ${interes.id_interes}`)
-            });
+            }
 
             const respuesta = await query(`DELETE FROM catalogo WHERE id_catal = ${id}`)
 
