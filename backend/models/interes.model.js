@@ -55,9 +55,11 @@ Item.create = (nuevo_body, result) => {
                 from: 'ventautosisc@gmail.com',
                 to: nuevo_body.id_user ? infoUsuario[0].correo_user : nuevo_body.correo_no_registrado,
                 subject: 'VENTAUTO: NOTIFICACION DE INTERES',
-                text: `Usted le a dado interes a la siguiente publicación: ${infoMarcaModelo[0].marca}, ${infoMarcaModelo[0].modelo}, ${infoCatalogo[0].anio_catal}
-                \n\n Publicado por: ${infoVendedor[0].nom_user}, Correo: ${infoVendedor[0].correo_user}, Telefono: ${infoVendedor[0].telef_user}`
-
+                // text: `Usted le a dado interes a la siguiente publicación: ${infoMarcaModelo[0].marca}, ${infoMarcaModelo[0].modelo}, ${infoCatalogo[0].anio_catal}
+                // \n\n Publicado por: ${infoVendedor[0].nom_user}, Correo: ${infoVendedor[0].correo_user}, Telefono: ${infoVendedor[0].telef_user}`
+                html: "<img [src]="
+                path.resolve('./uploads/logo.png')
+                ">"
             };
             await transporter.sendMail(mailOptions2, function(error, info) {
                 if (error) {
