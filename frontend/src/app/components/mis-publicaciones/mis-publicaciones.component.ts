@@ -33,7 +33,7 @@ export class MisPublicacionesComponent implements OnInit {
       this.mispublicaciones = temp;
       this.dbServ.toastSuccess('Publicacion eliminada', 'CORRECTO');
     } catch (error) {
-      console.error('ERROR ELIMINSANDO LA PUBLICACION');
+      console.error('ERROR ELIMINANDO LA PUBLICACION');
     }
   }
 }

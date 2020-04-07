@@ -1,12 +1,11 @@
 const sql = require("../config/connection");
 const util = require('util');
 const _ = require('lodash');
-// const Usuario = require("../models/user.model");
-// const Catalogo = require("./models/catalogo.model")
+
 
 
 // constructor
-const Item = function (item_) {
+const Item = function(item_) {
     this.id_catal = req.body.id_catal;
     this.fileName = req.body.fileName;
 };
@@ -27,7 +26,7 @@ Item.create = (nuevo_body, result) => {
 
 Item.findById = (id, result) => {
     const query = util.promisify(sql.query).bind(sql);
-    (async () => {
+    (async() => {
         try {
             const row = await query(`SELECT * FROM imagenes WHERE id_interes = ${id}`);
             // const marca_modelo = await query(`SELECT * FROM marcamodelo WHERE id_marcamodelo = ${ row[0].id_marcamodelo}`);
