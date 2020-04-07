@@ -26,14 +26,14 @@ export class MisPublicacionesComponent implements OnInit {
 
   async DeleteItem(vehiculo, i) {
     try {
-      const res = await this.dbServ.deleteCatalogo(vehiculo.id).toPromise();
+      const res = await this.dbServ.deleteCatalogo(vehiculo.id_catal).toPromise();
       const temp = JSON.parse(JSON.stringify(this.mispublicaciones));
       this.mispublicaciones = [];
       _.pullAt(temp, i);
       this.mispublicaciones = temp;
       this.dbServ.toastSuccess('Publicacion eliminada', 'CORRECTO');
     } catch (error) {
-      console.error('ERROR ELIMINSANDO LA PUBLICACION');
+      console.error('ERROR ELIMINANDO LA PUBLICACION');
     }
   }
 }
