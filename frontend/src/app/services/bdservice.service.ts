@@ -10,7 +10,6 @@ import * as _ from 'lodash';
   providedIn: 'root',
 })
 export class DBservice {
-  allowedRoles = ['VQ==', 'QQ=='];
   url = 'http://localhost:3000';
 
   constructor(private http: HttpClient, private toastr: ToastrService, private router: Router) {}
@@ -91,9 +90,11 @@ export class DBservice {
     // return this.peticion('catalogo', 'post', JSON.stringify(arg));
   }
   createCatalogo(arg) {
-    return this.http.post(this.url + '/catalogo', arg);
-    // return this.peticion('catalogo', 'post', arg);
-    // return this.peticion('catalogo', 'post', JSON.stringify(arg));
+    return this.peticion('catalogo', 'post', JSON.stringify(arg));
+  }
+
+  deleteCatalogo(id) {
+    return this.peticion(`catalogo/${id}`, 'delete', JSON.stringify({}));
   }
 
   getCatalogoInfo() {
@@ -135,15 +136,15 @@ export class DBservice {
   getAllFotosForAdmin() {
     return this.peticion(`imagenes/get/all`, 'get');
   }
-  
+
   updatePhoto(what, arg) {
     return this.peticion(`imagenes/update/${what}/${arg.id}`, 'patch', JSON.stringify(arg));
   }
-  
+
   // =====================================================================
   // INTERES
   // =====================================================================
-  
+
   createInteres(arg) {
     return this.peticion('interes', 'post', JSON.stringify(arg));
   }

@@ -22,7 +22,7 @@ require("./routes/catalogo.routes")(app);
 require("./routes/marcamodelo.routes")(app);
 require("./routes/imagenes.routes")(app);
 require("./routes/interes.routes")(app);
-// require("./routes/photos.routes")(app);
+
 
 // set port, listen for requests
 app.listen(3000, () => {

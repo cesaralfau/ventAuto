@@ -1,8 +1,6 @@
 const sql = require("../config/connection");
 const util = require('util');
 const _ = require('lodash');
-// const Usuario = require("../models/user.model");
-// const Catalogo = require("./models/catalogo.model")
 var nodemailer = require("nodemailer");
 
 
