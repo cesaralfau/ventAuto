@@ -1,9 +1,8 @@
 const sql = require("../config/connection");
 const util = require('util');
 const _ = require('lodash');
-const marcamodelo = require("../models/marcamodelo.model");
-const Usuario = require("../models/user.model");
-
+var fs = require("fs");
+const path = require("path");
 
 // constructor
 const Item = function (item_) {
@@ -155,21 +154,28 @@ Item.updateById = (id, body, result) => {
 };
 
 Item.remove = (id, result) => {
-    sql.query("DELETE FROM catalogo WHERE id_catal = ?", id, (err, res) => {
-        if (err) {
-            console.error("error: ", err);
-            result(null, err);
-            return;
-        }
+    const query = util.promisify(sql.query).bind(sql);
+    (async () => {
+        try {
 
-        if (res.affectedRows == 0) {
-            // not found Item with the id
-            result({ kind: "not_found" }, null);
-            return;
-        }
+            const imagenes_ = await query(`SELECT * FROM imagenes WHERE id_catal = ${id}`)
+            imagenes_.forEach(img => {
+                const res = await query(`DELETE * FROM imagenes WHERE id_imagenes = ${img.id_imagenes}`)
+                await fs.unlinkSync(path.resolve("./uploads/" + img.fileName));
+            });
+            const intereses_ = await query(`SELECT * FROM interes WHERE id_catal = ${id}`)
+            intereses_.forEach(interes => {
+                const res = await query(`DELETE * FROM interes WHERE id_interes = ${interes.id_interes}`)
+            });
 
-        result(null, res);
-    });
+            const respuesta = await query(`DELETE FROM catalogo WHERE id_catal = ${id}`)
+
+            result(null, respuesta);
+            query.end();
+        } catch (error) {
+            console.error(error);
+        }
+    })()
 };
 
 
