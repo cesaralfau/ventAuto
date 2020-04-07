@@ -5,7 +5,7 @@ var nodemailer = require("nodemailer");
 
 
 // constructor
-const Item = function (item_) {
+const Item = function(item_) {
     this.id_catal = item_.id_catal;
     this.id_user = item_.id_user;
     this.nombre_no_registrado = item_.nombre_no_registrado;
@@ -15,7 +15,7 @@ const Item = function (item_) {
 
 Item.create = (nuevo_body, result) => {
     const query = util.promisify(sql.query).bind(sql);
-    (async () => {
+    (async() => {
         try {
             const info = await query("INSERT INTO interes SET ?", nuevo_body);
             let infoUsuario;
@@ -43,7 +43,7 @@ Item.create = (nuevo_body, result) => {
                 text: `El siguiente usuario le a dado interes a la siguiente publicación: ${infoMarcaModelo[0].marca}, ${infoMarcaModelo[0].modelo}, ${infoCatalogo[0].anio_catal} 
                 \n\n Nombre: ${nuevo_body.id_user ? infoUsuario[0].nom_user : nuevo_body.nombre_no_registrado}, Correo: ${nuevo_body.id_user ? infoUsuario[0].correo_user : nuevo_body.correo_no_registrado},Telefono: ${nuevo_body.id_user ? infoUsuario[0].telef_user : nuevo_body.telef_no_registrado}`
             };
-            await transporter.sendMail(mailOptions, function (error, info) {
+            await transporter.sendMail(mailOptions, function(error, info) {
                 if (error) {
                     console.error(error);
                     result(error, null);
@@ -55,11 +55,11 @@ Item.create = (nuevo_body, result) => {
                 from: 'ventautosisc@gmail.com',
                 to: nuevo_body.id_user ? infoUsuario[0].correo_user : nuevo_body.correo_no_registrado,
                 subject: 'VENTAUTO: NOTIFICACION DE INTERES',
-                // text: `Usted le a dado interes a la siguiente publicación: ${infoMarcaModelo[0].marca}, ${infoMarcaModelo[0].modelo}, ${infoCatalogo[0].anio_catal}
-                // \n\n Publicado por: ${infoVendedor[0].nom_user}, Correo: ${infoVendedor[0].correo_user}, Telefono: ${infoVendedor[0].telef_user}`
-                html: "<img [src]='path.resolve('./uploads/logo.png')'>"
+                text: `Usted le a dado interes a la siguiente publicación: ${infoMarcaModelo[0].marca}, ${infoMarcaModelo[0].modelo}, ${infoCatalogo[0].anio_catal}
+                \n\n Publicado por: ${infoVendedor[0].nom_user}, Correo: ${infoVendedor[0].correo_user}, Telefono: ${infoVendedor[0].telef_user}`
+
             };
-            await transporter.sendMail(mailOptions2, function (error, info) {
+            await transporter.sendMail(mailOptions2, function(error, info) {
                 if (error) {
                     console.error(error);
                     result(error, null);
