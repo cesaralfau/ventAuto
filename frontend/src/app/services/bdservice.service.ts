@@ -90,7 +90,7 @@ export class DBservice {
     // return this.peticion('catalogo', 'post', JSON.stringify(arg));
   }
   createCatalogo(arg) {
-    return this.peticion('catalogo', 'post', arg);
+    return this.http.post(this.url + '/catalogo', arg);
   }
 
   deleteCatalogo(id) {
