@@ -41,7 +41,7 @@ Item.create = (nuevo_body, result) => {
                 to: infoVendedor[0].correo_user,
                 subject: 'VENTAUTO: NOTIFICACION DE INTERES',
                 text: `El siguiente usuario le a dado interes a la siguiente publicación: ${infoMarcaModelo[0].marca}, ${infoMarcaModelo[0].modelo}, ${infoCatalogo[0].anio_catal} 
-                \n\n Nombre: ${nuevo_body.id_user ? infoUsuario[0].nom_user : nuevo_body.nombre_no_registrado}, Correo: ${nuevo_body.id_user ? infoUsuario[0].correo_user : nuevo_body.correo_no_registrado},Telefono: ${nuevo_body.id_user ? infoUsuario[0].telef_user : nuevo_body.telef_no_registrado}`
+                // \n\n Nombre: ${nuevo_body.id_user ? infoUsuario[0].nom_user : nuevo_body.nombre_no_registrado}, Correo: ${nuevo_body.id_user ? infoUsuario[0].correo_user : nuevo_body.correo_no_registrado},Telefono: ${nuevo_body.id_user ? infoUsuario[0].telef_user : nuevo_body.telef_no_registrado}`
             };
             await transporter.sendMail(mailOptions, function(error, info) {
                 if (error) {
