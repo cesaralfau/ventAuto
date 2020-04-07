@@ -5,7 +5,7 @@ var fs = require("fs");
 const path = require("path");
 
 // constructor
-const Item = function (item_) {
+const Item = function(item_) {
     this.anio_catal = item_.anio_catal;
     this.cilind_catal = item_.cilind_catal;
     this.color_catal = item_.color_catal;
@@ -22,7 +22,7 @@ const Item = function (item_) {
 Item.create = (nuevo_body, filesInfo, result) => {
 
     const query = util.promisify(sql.query).bind(sql);
-    (async () => {
+    (async() => {
         try {
             const infoCatal = await query("INSERT INTO catalogo SET ?", nuevo_body);
             for (let i = 0; i < filesInfo.length; i++) {
@@ -45,7 +45,7 @@ Item.create = (nuevo_body, filesInfo, result) => {
 
 Item.findByIdCliente = (id, result) => {
     const query = util.promisify(sql.query).bind(sql);
-    (async () => {
+    (async() => {
         try {
             const catalogo = []
             const rows = await query(`SELECT * FROM catalogo WHERE id_user = ${id}`);
@@ -69,7 +69,7 @@ Item.findByIdCliente = (id, result) => {
 };
 Item.findById = (id, result) => {
     const query = util.promisify(sql.query).bind(sql);
-    (async () => {
+    (async() => {
         try {
             const row = await query(`SELECT * FROM catalogo WHERE id_catal = ${id}`);
             const marca_modelo = await query(`SELECT * FROM marcamodelo WHERE id_marcamodelo = ${row[0].id_marcamodelo}`);
@@ -87,7 +87,7 @@ Item.findById = (id, result) => {
 };
 Item.searchAll = (id_marcamodelo, desde, hasta, estado, result) => {
     const query = util.promisify(sql.query).bind(sql);
-    (async () => {
+    (async() => {
         try {
             const catalogo = []
             const rows = await query(`SELECT * FROM catalogo WHERE id_marcamodelo = ${id_marcamodelo} AND estado_catal = '${estado}' AND anio_catal BETWEEN ${desde} AND ${hasta}`);
@@ -113,7 +113,7 @@ Item.searchAll = (id_marcamodelo, desde, hasta, estado, result) => {
 Item.getAll = async result => {
 
     const query = util.promisify(sql.query).bind(sql);
-    (async () => {
+    (async() => {
         try {
             const catalogo = []
             const rows = await query('select * from catalogo');
@@ -155,20 +155,20 @@ Item.updateById = (id, body, result) => {
 
 Item.remove = (id, result) => {
     const query = util.promisify(sql.query).bind(sql);
-    (async () => {
+    (async() => {
         try {
 
             const imagenes_ = await query(`SELECT * FROM imagenes WHERE id_catal = ${id}`)
             for (let i = 0; i < imagenes_.length; i++) {
                 const img = imagenes_[i];
-                const res = await query(`DELETE * FROM imagenes WHERE id_imagenes = ${img.id_imagenes}`)
+                const res = await query(`DELETE FROM imagenes WHERE id_imagenes = ${img.id_imagenes}`)
                 await fs.unlinkSync(path.resolve("./uploads/" + img.fileName));
             }
 
             const intereses_ = await query(`SELECT * FROM interes WHERE id_catal = ${id}`)
             for (let i = 0; i < intereses_.length; i++) {
                 const interes = intereses_[i];
-                const res = await query(`DELETE * FROM interes WHERE id_interes = ${interes.id_interes}`)
+                const res = await query(`DELETE FROM interes WHERE id_interes = ${interes.id_interes}`)
             }
 
             const respuesta = await query(`DELETE FROM catalogo WHERE id_catal = ${id}`)
