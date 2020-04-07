@@ -41,6 +41,7 @@ Item.findById = (id, result) => {
     })()
 };
 
+
 // Item.searchAll = (id_marcamodelo, desde, hasta, estado, result) => {
 //     const query = util.promisify(sql.query).bind(sql);
 //     (async() => {

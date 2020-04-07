@@ -26,7 +26,7 @@ export class MisPublicacionesComponent implements OnInit {
 
   async DeleteItem(vehiculo, i) {
     try {
-      const res = await this.dbServ.deleteCatalogo(vehiculo.id).toPromise();
+      const res = await this.dbServ.deleteCatalogo(vehiculo.id_catal).toPromise();
       const temp = JSON.parse(JSON.stringify(this.mispublicaciones));
       this.mispublicaciones = [];
       _.pullAt(temp, i);
